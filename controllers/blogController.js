@@ -1,0 +1,167 @@
+const Blog = require('../models/Blog');
+const { slugify, uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
+
+const getBlogs = async (req, res) => {
+  const { page = 1, limit = 10, search, category } = req.query;
+
+  const query = { isPublished: true };
+
+  if (search) {
+    query.$or = [
+      { title: { $regex: search, $options: 'i' } },
+      { content: { $regex: search, $options: 'i' } },
+    ];
+  }
+
+  if (category) {
+    query.category = category;
+  }
+
+  const total = await Blog.countDocuments(query);
+  const blogs = await Blog.find(query)
+    .sort({ publishedAt: -1 })
+    .skip((page - 1) * limit)
+    .limit(Number(limit));
+
+  res.json({
+    blogs,
+    total,
+    page: Number(page),
+    pages: Math.ceil(total / limit),
+  });
+};
+
+const getBlogBySlug = async (req, res) => {
+  const blog = await Blog.findOne({ slug: req.params.slug });
+  if (!blog) {
+    return res.status(404).json({ message: 'Blog not found' });
+  }
+  res.json(blog);
+};
+
+const createBlog = async (req, res) => {
+  const { title, content, excerpt, author, category, tags, isPublished } = req.body;
+
+  let slug = slugify(title);
+
+  const existingSlug = await Blog.findOne({ slug });
+  if (existingSlug) {
+    slug = slug + '-' + Date.now();
+  }
+
+  let image = { url: '', publicId: '' };
+
+  if (req.file) {
+    image = await uploadToCloudinary(req.file.path, 'blogs');
+  }
+
+  const blog = await Blog.create({
+    title,
+    slug,
+    content,
+    excerpt,
+    image,
+    author,
+    category,
+    tags: tags ? JSON.parse(tags) : [],
+    isPublished,
+    publishedAt: isPublished ? Date.now() : undefined,
+  });
+
+  res.status(201).json(blog);
+};
+
+const updateBlog = async (req, res) => {
+  let blog = await Blog.findById(req.params.id);
+
+  if (!blog) {
+    return res.status(404).json({ message: 'Blog not found' });
+  }
+
+  const { title, content, excerpt, author, category, tags, isPublished } = req.body;
+
+  if (title && title !== blog.title) {
+    let slug = slugify(title);
+    const existingSlug = await Blog.findOne({ slug, _id: { $ne: req.params.id } });
+    if (existingSlug) {
+      slug = slug + '-' + Date.now();
+    }
+    blog.slug = slug;
+  }
+
+  let image = blog.image;
+
+  if (req.file) {
+    if (blog.image.publicId) {
+      await deleteFromCloudinary(blog.image.publicId);
+    }
+    image = await uploadToCloudinary(req.file.path, 'blogs');
+  }
+
+  blog.title = title || blog.title;
+  blog.content = content || blog.content;
+  blog.excerpt = excerpt || blog.excerpt;
+  blog.image = image;
+  blog.author = author || blog.author;
+  blog.category = category || blog.category;
+  blog.tags = tags ? JSON.parse(tags) : blog.tags;
+
+  if (isPublished !== undefined) {
+    blog.isPublished = isPublished;
+    blog.publishedAt = isPublished ? blog.publishedAt || Date.now() : undefined;
+  }
+
+  const updatedBlog = await blog.save();
+  res.json(updatedBlog);
+};
+
+const deleteBlog = async (req, res) => {
+  const blog = await Blog.findById(req.params.id);
+
+  if (!blog) {
+    return res.status(404).json({ message: 'Blog not found' });
+  }
+
+  if (blog.image.publicId) {
+    await deleteFromCloudinary(blog.image.publicId);
+  }
+
+  await blog.deleteOne();
+  res.json({ message: 'Blog removed' });
+};
+
+const getAllBlogsAdmin = async (req, res) => {
+  const { page = 1, limit = 10, search, category, isPublished } = req.query;
+
+  const query = {};
+
+  if (search) {
+    query.$or = [
+      { title: { $regex: search, $options: 'i' } },
+      { content: { $regex: search, $options: 'i' } },
+    ];
+  }
+
+  if (category) {
+    query.category = category;
+  }
+
+  if (isPublished !== undefined) {
+    query.isPublished = isPublished === 'true';
+  }
+
+  const total = await Blog.countDocuments(query);
+  const blogs = await Blog.find(query)
+    .sort({ createdAt: -1 })
+    .skip((page - 1) * limit)
+    .limit(Number(limit));
+
+  res.json({
+    blogs,
+    total,
+    page: Number(page),
+    pages: Math.ceil(total / limit),
+  });
+};
+
+module.exports = { getBlogs, getBlogBySlug, createBlog, updateBlog, deleteBlog, getAllBlogsAdmin };
