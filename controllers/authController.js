@@ -30,16 +30,18 @@ const login = async (req, res) => {
   });
 
   res.json({
-    _id: admin._id,
-    name: admin.name,
-    email: admin.email,
-    role: admin.role,
+    user: {
+      _id: admin._id,
+      name: admin.name,
+      email: admin.email,
+      role: admin.role,
+    },
     token,
   });
 };
 
 const getMe = async (req, res) => {
-  res.json(req.admin);
+  res.json({ user: req.admin });
 };
 
 const logout = async (req, res) => {
