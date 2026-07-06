@@ -43,9 +43,35 @@ const deleteFromCloudinary = async (publicId) => {
   }
 };
 
+const formatContent = (text) => {
+  if (!text) return '';
+  const blocks = text.split(/\n\s*\n/).filter(b => b.trim());
+  let html = '';
+  for (const block of blocks) {
+    const lines = block.split('\n').filter(l => l.trim());
+    let inBullet = false;
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (/^\d+[\.\)]\s/.test(trimmed)) {
+        if (inBullet) { html += '</ul>'; inBullet = false; }
+        html += `<p><strong>${trimmed}</strong></p>`;
+      } else if (/^[-–—*]\s/.test(trimmed)) {
+        if (!inBullet) { html += '<ul class="list-disc pl-6 space-y-1">'; inBullet = true; }
+        html += `<li>${trimmed.replace(/^[-–—*]\s/, '')}</li>`;
+      } else {
+        if (inBullet) { html += '</ul>'; inBullet = false; }
+        html += `<p>${trimmed}</p>`;
+      }
+    }
+    if (inBullet) { html += '</ul>'; inBullet = false; }
+  }
+  return html;
+};
+
 module.exports = {
   slugify,
   generateToken,
   uploadToCloudinary,
   deleteFromCloudinary,
+  formatContent,
 };

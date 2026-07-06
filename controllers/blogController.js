@@ -1,10 +1,11 @@
+const mongoose = require('mongoose');
 const Blog = require('../models/Blog');
-const { slugify, uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
+const { slugify, uploadToCloudinary, deleteFromCloudinary, formatContent } = require('../utils/helpers');
 
 const getBlogs = async (req, res) => {
   const { page = 1, limit = 10, search, category } = req.query;
 
-  const query = { isPublished: true };
+  const query = { isPublished: { $in: [true, 'true'] } };
 
   if (search) {
     query.$or = [
@@ -32,7 +33,11 @@ const getBlogs = async (req, res) => {
 };
 
 const getBlogBySlug = async (req, res) => {
-  const blog = await Blog.findOne({ slug: req.params.slug });
+  const { slug } = req.params;
+  let blog = await Blog.findOne({ slug });
+  if (!blog && mongoose.Types.ObjectId.isValid(slug)) {
+    blog = await Blog.findById(slug);
+  }
   if (!blog) {
     return res.status(404).json({ message: 'Blog not found' });
   }
@@ -55,17 +60,28 @@ const createBlog = async (req, res) => {
     image = await uploadToCloudinary(req.file.path, 'blogs');
   }
 
+  let parsedTags = [];
+  if (tags) {
+    try {
+      parsedTags = JSON.parse(tags);
+    } catch {
+      parsedTags = tags.split(',').map((t) => t.trim()).filter(Boolean);
+    }
+  }
+
+  const publish = isPublished === true || isPublished === 'true';
+
   const blog = await Blog.create({
     title,
     slug,
     content,
     excerpt,
     image,
-    author,
+    author: author || 'Admin',
     category,
-    tags: tags ? JSON.parse(tags) : [],
-    isPublished,
-    publishedAt: isPublished ? Date.now() : undefined,
+    tags: parsedTags,
+    isPublished: publish,
+    publishedAt: publish ? Date.now() : undefined,
   });
 
   res.status(201).json(blog);
@@ -104,11 +120,18 @@ const updateBlog = async (req, res) => {
   blog.image = image;
   blog.author = author || blog.author;
   blog.category = category || blog.category;
-  blog.tags = tags ? JSON.parse(tags) : blog.tags;
+  if (tags) {
+    try {
+      blog.tags = JSON.parse(tags);
+    } catch {
+      blog.tags = tags.split(',').map((t) => t.trim()).filter(Boolean);
+    }
+  }
 
   if (isPublished !== undefined) {
-    blog.isPublished = isPublished;
-    blog.publishedAt = isPublished ? blog.publishedAt || Date.now() : undefined;
+    const publish = isPublished === true || isPublished === 'true';
+    blog.isPublished = publish;
+    blog.publishedAt = publish ? blog.publishedAt || Date.now() : undefined;
   }
 
   const updatedBlog = await blog.save();
