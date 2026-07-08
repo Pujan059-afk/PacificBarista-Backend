@@ -25,6 +25,14 @@ const adminSchema = new mongoose.Schema({
     enum: ['admin', 'superadmin'],
     default: 'admin',
   },
+  otp: {
+    type: String,
+    select: false,
+  },
+  otpExpiry: {
+    type: Date,
+    select: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

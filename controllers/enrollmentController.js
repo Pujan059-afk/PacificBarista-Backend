@@ -1,14 +1,25 @@
+const mongoose = require('mongoose');
 const Enrollment = require('../models/Enrollment');
+const Course = require('../models/Course');
 
 const createEnrollment = async (req, res) => {
   const { fullName, email, phone, address, course, education, experience, message } = req.body;
+
+  let courseId = course;
+  if (typeof course === 'string' && !mongoose.Types.ObjectId.isValid(course)) {
+    const found = await Course.findOne({ slug: course });
+    if (!found) {
+      return res.status(400).json({ message: `Course not found: ${course}` });
+    }
+    courseId = found._id;
+  }
 
   const enrollment = await Enrollment.create({
     fullName,
     email,
     phone,
     address,
-    course,
+    course: courseId,
     education,
     experience,
     message,

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Course = require('../models/Course');
 const { slugify, uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
 
@@ -5,7 +6,7 @@ const getCourses = async (req, res) => {
   const { page = 1, limit = 10, search, level, featured } = req.query;
 
   const query = {};
-
+  
   if (search) {
     query.title = { $regex: search, $options: 'i' };
   }
@@ -33,7 +34,10 @@ const getCourses = async (req, res) => {
 };
 
 const getCourseBySlug = async (req, res) => {
-  const course = await Course.findOne({ slug: req.params.slug });
+  const param = req.params.slug;
+  const isObjectId = mongoose.Types.ObjectId.isValid(param);
+  const query = isObjectId ? { _id: param } : { slug: param };
+  const course = await Course.findOne(query);
   if (!course) {
     return res.status(404).json({ message: 'Course not found' });
   }
@@ -49,6 +53,8 @@ const createCourse = async (req, res) => {
   if (existingSlug) {
     slug = slug + '-' + Date.now();
   }
+
+  const toBool = (v) => v === true || v === 'true';
 
   let image = { url: '', publicId: '' };
 
@@ -68,9 +74,9 @@ const createCourse = async (req, res) => {
     curriculum: curriculum ? JSON.parse(curriculum) : [],
     learningOutcomes: learningOutcomes ? JSON.parse(learningOutcomes) : [],
     requirements: requirements ? JSON.parse(requirements) : [],
-    certificateIncluded,
-    featured,
-    isActive,
+    certificateIncluded: toBool(certificateIncluded),
+    featured: toBool(featured),
+    isActive: isActive === undefined || isActive === '' ? true : toBool(isActive),
   });
 
   res.status(201).json(course);
@@ -94,6 +100,8 @@ const updateCourse = async (req, res) => {
     course.slug = slug;
   }
 
+  const toBool = (v) => v === true || v === 'true';
+
   let image = course.image;
 
   if (req.file) {
@@ -109,13 +117,13 @@ const updateCourse = async (req, res) => {
   course.image = image;
   course.duration = duration || course.duration;
   course.level = level || course.level;
-  course.price = price || course.price;
+  course.price = price !== undefined && price !== '' ? price : course.price;
   course.curriculum = curriculum ? JSON.parse(curriculum) : course.curriculum;
   course.learningOutcomes = learningOutcomes ? JSON.parse(learningOutcomes) : course.learningOutcomes;
   course.requirements = requirements ? JSON.parse(requirements) : course.requirements;
-  course.certificateIncluded = certificateIncluded !== undefined ? certificateIncluded : course.certificateIncluded;
-  course.featured = featured !== undefined ? featured : course.featured;
-  course.isActive = isActive !== undefined ? isActive : course.isActive;
+  course.certificateIncluded = certificateIncluded !== undefined && certificateIncluded !== '' ? toBool(certificateIncluded) : course.certificateIncluded;
+  course.featured = featured !== undefined && featured !== '' ? toBool(featured) : course.featured;
+  course.isActive = isActive !== undefined && isActive !== '' ? toBool(isActive) : course.isActive;
 
   const updatedCourse = await course.save();
   res.json(updatedCourse);

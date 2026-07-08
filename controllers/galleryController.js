@@ -24,10 +24,15 @@ const getGalleryImages = async (req, res) => {
 };
 
 const addGalleryImage = async (req, res) => {
-  const { title, category } = req.body;
+  let { title, category } = req.body;
 
   if (!req.file) {
     return res.status(400).json({ message: 'Image is required' });
+  }
+
+  if (!title) {
+    const name = req.file.originalname.replace(/\.[^/.]+$/, '');
+    title = name.replace(/[-_]/g, ' ');
   }
 
   const image = await uploadToCloudinary(req.file.path, 'gallery');

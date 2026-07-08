@@ -15,10 +15,11 @@ const enrollmentRoutes = require('./routes/enrollmentRoutes');
 const trainerRoutes = require('./routes/trainerRoutes');
 const blogRoutes = require('./routes/blogRoutes');
 const galleryRoutes = require('./routes/galleryRoutes');
-const workshopRoutes = require('./routes/workshopRoutes');
+
 const testimonialRoutes = require('./routes/testimonialRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const newsletterRoutes = require('./routes/newsletterRoutes');
+const certificateRoutes = require('./routes/certificateRoutes');
 
 const app = express();
 
@@ -40,10 +41,11 @@ app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/trainers', trainerRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/gallery', galleryRoutes);
-app.use('/api/workshops', workshopRoutes);
+
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/certificates', certificateRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Pacific Barista API is running' });
