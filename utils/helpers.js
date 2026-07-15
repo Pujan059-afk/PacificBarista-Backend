@@ -19,20 +19,26 @@ const generateToken = (id) => {
   });
 };
 
-const uploadToCloudinary = async (filePath, folder) => {
-  try {
-    const result = await cloudinary.uploader.upload(filePath, {
-      folder: `pacific-barista/${folder}`,
-      resource_type: 'image',
-    });
-    return {
-      url: result.secure_url,
-      publicId: result.public_id,
-    };
-  } catch (error) {
-    console.error('Cloudinary upload error:', error);
-    throw new Error('Image upload failed');
-  }
+const uploadToCloudinary = async (fileBuffer, folder) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder: `pacific-barista/${folder}`,
+        resource_type: 'image',
+      },
+      (error, result) => {
+        if (error) {
+          console.error('Cloudinary upload error:', error);
+          return reject(new Error('Image upload failed'));
+        }
+        resolve({
+          url: result.secure_url,
+          publicId: result.public_id,
+        });
+      }
+    );
+    uploadStream.end(fileBuffer);
+  });
 };
 
 const deleteFromCloudinary = async (publicId) => {

@@ -57,7 +57,7 @@ const createBlog = async (req, res) => {
   let image = { url: '', publicId: '' };
 
   if (req.file) {
-    image = await uploadToCloudinary(req.file.path, 'blogs');
+    image = await uploadToCloudinary(req.file.buffer, 'blogs');
   }
 
   let parsedTags = [];
@@ -111,7 +111,7 @@ const updateBlog = async (req, res) => {
     if (blog.image.publicId) {
       await deleteFromCloudinary(blog.image.publicId);
     }
-    image = await uploadToCloudinary(req.file.path, 'blogs');
+    image = await uploadToCloudinary(req.file.buffer, 'blogs');
   }
 
   blog.title = title || blog.title;

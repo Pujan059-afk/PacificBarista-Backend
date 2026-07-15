@@ -59,7 +59,7 @@ const createCourse = async (req, res) => {
   let image = { url: '', publicId: '' };
 
   if (req.file) {
-    image = await uploadToCloudinary(req.file.path, 'courses');
+    image = await uploadToCloudinary(req.file.buffer, 'courses');
   }
 
   const course = await Course.create({
@@ -108,7 +108,7 @@ const updateCourse = async (req, res) => {
     if (course.image.publicId) {
       await deleteFromCloudinary(course.image.publicId);
     }
-    image = await uploadToCloudinary(req.file.path, 'courses');
+    image = await uploadToCloudinary(req.file.buffer, 'courses');
   }
 
   course.title = title || course.title;

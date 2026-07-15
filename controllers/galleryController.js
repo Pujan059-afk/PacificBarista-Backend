@@ -35,7 +35,7 @@ const addGalleryImage = async (req, res) => {
     title = name.replace(/[-_]/g, ' ');
   }
 
-  const image = await uploadToCloudinary(req.file.path, 'gallery');
+  const image = await uploadToCloudinary(req.file.buffer, 'gallery');
 
   const galleryImage = await Gallery.create({
     image,

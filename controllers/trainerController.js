@@ -47,7 +47,7 @@ const createTrainer = async (req, res) => {
   let photo = { url: '', publicId: '' };
 
   if (req.file) {
-    photo = await uploadToCloudinary(req.file.path, 'trainers');
+    photo = await uploadToCloudinary(req.file.buffer, 'trainers');
   }
 
   const trainer = await Trainer.create({
@@ -88,7 +88,7 @@ const updateTrainer = async (req, res) => {
     if (trainer.photo.publicId) {
       await deleteFromCloudinary(trainer.photo.publicId);
     }
-    photo = await uploadToCloudinary(req.file.path, 'trainers');
+    photo = await uploadToCloudinary(req.file.buffer, 'trainers');
   }
 
   trainer.name = name || trainer.name;
