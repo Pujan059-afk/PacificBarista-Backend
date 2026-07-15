@@ -12,7 +12,7 @@ const gallerySchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: [true, 'Category is required'],
+    default: 'General',
   },
   isActive: {
     type: Boolean,
