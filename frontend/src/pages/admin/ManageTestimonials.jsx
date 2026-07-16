@@ -73,12 +73,14 @@ const ManageTestimonials = () => {
     setSaving(true);
     try {
       const hasPhoto = Boolean(photo);
-      const config = hasPhoto ? { headers: { 'Content-Type': 'multipart/form-data' } } : {};
+      // Do NOT manually set Content-Type for FormData — axios must set it
+      // automatically so it includes the multipart boundary.
+      const payload = hasPhoto ? buildFormData() : form;
       if (editId) {
-        await api.put(`/testimonials/${editId}`, hasPhoto ? buildFormData() : form, config);
+        await api.put(`/testimonials/${editId}`, payload);
         showToast('Testimonial updated', 'success');
       } else {
-        await api.post('/testimonials', hasPhoto ? buildFormData() : form, config);
+        await api.post('/testimonials', payload);
         showToast('Testimonial created', 'success');
       }
       setModalOpen(false);
