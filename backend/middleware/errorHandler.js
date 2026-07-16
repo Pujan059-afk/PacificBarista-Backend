@@ -1,4 +1,9 @@
 const errorHandler = (err, req, res, next) => {
+  console.error(`[ERROR] ${req.method} ${req.originalUrl}:`, err.message);
+  if (process.env.NODE_ENV !== 'production') {
+    console.error(err.stack);
+  }
+
   let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   let message = err.message;
 
