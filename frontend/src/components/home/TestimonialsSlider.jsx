@@ -71,6 +71,7 @@ const TestimonialsSlider = () => {
           viewport={{ once: true, margin: '-50px' }}
         >
           <Swiper
+            key={testimonials.length}
             modules={[Autoplay, Pagination, Navigation]}
             spaceBetween={24}
             slidesPerView={1}
@@ -80,11 +81,8 @@ const TestimonialsSlider = () => {
               1024: { slidesPerView: 3 },
             }}
             autoplay={{ delay: 5000, disableOnInteraction: false }}
-            pagination={{ clickable: true, el: '.testimonials-pagination' }}
-            navigation={{
-              nextEl: '.testimonials-next',
-              prevEl: '.testimonials-prev',
-            }}
+            pagination={{ clickable: true }}
+            navigation={true}
             className="pb-12"
           >
             {testimonials.map((t, i) => (
@@ -146,15 +144,7 @@ const TestimonialsSlider = () => {
             ))}
           </Swiper>
 
-          <div className="flex items-center justify-center gap-4 mt-2">
-            <button className="testimonials-prev w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-text/40 hover:text-accent hover:border-accent transition-colors duration-300">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-            </button>
-            <div className="testimonials-pagination flex gap-2" />
-            <button className="testimonials-next w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-text/40 hover:text-accent hover:border-accent transition-colors duration-300">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-            </button>
-          </div>
+
         </motion.div>
       </div>
     </section>
