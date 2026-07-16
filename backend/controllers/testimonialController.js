@@ -30,7 +30,7 @@ const createTestimonial = async (req, res) => {
   let photo = { url: '', publicId: '' };
 
   if (req.file) {
-    photo = await uploadToCloudinary(req.file.path, 'testimonials');
+    photo = await uploadToCloudinary(req.file.buffer, 'testimonials');
   }
 
   const testimonial = await Testimonial.create({
@@ -61,7 +61,7 @@ const updateTestimonial = async (req, res) => {
     if (testimonial.photo.publicId) {
       await deleteFromCloudinary(testimonial.photo.publicId);
     }
-    photo = await uploadToCloudinary(req.file.path, 'testimonials');
+    photo = await uploadToCloudinary(req.file.buffer, 'testimonials');
   }
 
   testimonial.studentName = studentName || testimonial.studentName;
