@@ -7,7 +7,7 @@ import PageTransition from '../../components/common/PageTransition';
 import Button from '../../components/ui/Button';
 import { FiPlus, FiEdit2, FiTrash2, FiStar, FiX } from 'react-icons/fi';
 
-const emptyForm = { studentName: '', course: '', content: '', rating: 5, isActive: true };
+const emptyForm = { studentName: '', course: '', content: '', rating: 5, isFeatured: false, isActive: true };
 
 const ManageTestimonials = () => {
   const { showToast } = useApp();
@@ -47,18 +47,22 @@ const ManageTestimonials = () => {
 
   const openEdit = (t) => {
     setEditId(t._id);
-    setForm({ studentName: t.studentName || '', course: t.course || '', content: t.content || '', rating: t.rating || 5, isActive: t.isActive ?? true });
+    setForm({ studentName: t.studentName || '', course: t.course || '', content: t.content || '', rating: t.rating || 5, isFeatured: t.isFeatured ?? false, isActive: t.isActive ?? true });
     setPhoto(null);
     setPhotoPreview(t.photo?.url || '');
     setModalOpen(true);
   };
 
+  // Always use FormData (same approach as trainers/courses) so the
+  // Content-Type boundary is set correctly by axios regardless of
+  // whether a photo is attached.
   const buildFormData = () => {
     const fd = new FormData();
     fd.append('studentName', form.studentName);
     fd.append('course', form.course);
     fd.append('content', form.content);
     fd.append('rating', form.rating);
+    fd.append('isFeatured', form.isFeatured);
     fd.append('isActive', form.isActive);
     if (photo) fd.append('photo', photo);
     return fd;
@@ -72,10 +76,8 @@ const ManageTestimonials = () => {
     }
     setSaving(true);
     try {
-      const hasPhoto = Boolean(photo);
-      // Do NOT manually set Content-Type for FormData — axios must set it
-      // automatically so it includes the multipart boundary.
-      const payload = hasPhoto ? buildFormData() : form;
+      // Always send FormData — axios sets the correct multipart boundary automatically
+      const payload = buildFormData();
       if (editId) {
         await api.put(`/testimonials/${editId}`, payload);
         showToast('Testimonial updated', 'success');
@@ -276,6 +278,15 @@ const ManageTestimonials = () => {
                     ))}
                   </div>
                 </div>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={form.isFeatured}
+                    onChange={(e) => setForm((p) => ({ ...p, isFeatured: e.target.checked }))}
+                    className="w-4 h-4 rounded border-primary/20 text-accent focus:ring-accent"
+                  />
+                  <span className="font-body text-sm text-text">Featured</span>
+                </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"

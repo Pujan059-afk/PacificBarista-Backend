@@ -32,6 +32,8 @@ const createTestimonial = async (req, res, next) => {
   try {
     const { studentName, course, content, rating, isFeatured, isActive } = req.body;
 
+    const toBool = (v) => v === true || v === 'true';
+
     let photo = { url: '', publicId: '' };
 
     if (req.file) {
@@ -43,9 +45,9 @@ const createTestimonial = async (req, res, next) => {
       photo,
       course,
       content,
-      rating,
-      isFeatured,
-      isActive,
+      rating: Number(rating),
+      isFeatured: isFeatured !== undefined ? toBool(isFeatured) : false,
+      isActive: isActive !== undefined ? toBool(isActive) : true,
     });
 
     res.status(201).json(testimonial);
@@ -64,6 +66,8 @@ const updateTestimonial = async (req, res, next) => {
 
     const { studentName, course, content, rating, isFeatured, isActive } = req.body;
 
+    const toBool = (v) => v === true || v === 'true';
+
     let photo = testimonial.photo;
 
     if (req.file) {
@@ -77,9 +81,9 @@ const updateTestimonial = async (req, res, next) => {
     testimonial.photo = photo;
     testimonial.course = course || testimonial.course;
     testimonial.content = content || testimonial.content;
-    testimonial.rating = rating || testimonial.rating;
-    testimonial.isFeatured = isFeatured !== undefined ? isFeatured : testimonial.isFeatured;
-    testimonial.isActive = isActive !== undefined ? isActive : testimonial.isActive;
+    testimonial.rating = rating ? Number(rating) : testimonial.rating;
+    testimonial.isFeatured = isFeatured !== undefined ? toBool(isFeatured) : testimonial.isFeatured;
+    testimonial.isActive = isActive !== undefined ? toBool(isActive) : testimonial.isActive;
 
     const updatedTestimonial = await testimonial.save();
     res.json(updatedTestimonial);
