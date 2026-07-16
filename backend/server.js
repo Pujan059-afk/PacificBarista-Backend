@@ -27,10 +27,8 @@ connectDB();
 configureCloudinary();
 
 const allowedOrigins = [
-  'http://localhost:3000',
   'http://localhost:5173',
   'https://pacificbarista.com.np',
-  'https://www.pacificbarista.com.np',
 ];
 
 if (process.env.CLIENT_URL) {
