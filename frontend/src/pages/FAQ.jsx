@@ -128,11 +128,11 @@ const FAQ = () => {
       <Helmet>
         <title>Frequently Asked Questions | Pacific Barista Academy</title>
         <meta name="description" content="Find answers to commonly asked questions about Pacific Barista Academy, our courses, enrollment, certifications, and career support." />
-        <link rel="canonical" href="https://www.pacificbarista.com/faq" />
+        <link rel="canonical" href="https://pacificbarista.com.np/faq" />
         <meta property="og:title" content="Frequently Asked Questions | Pacific Barista Academy" />
         <meta property="og:description" content="Find answers to commonly asked questions about Pacific Barista Academy." />
-        <meta property="og:url" content="https://www.pacificbarista.com/faq" />
-        <meta property="og:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta property="og:url" content="https://pacificbarista.com.np/faq" />
+        <meta property="og:image" content="https://pacificbarista.com.np/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Frequently Asked Questions | Pacific Barista Academy" />
         <meta name="twitter:description" content="Find answers to commonly asked questions about Pacific Barista Academy." />

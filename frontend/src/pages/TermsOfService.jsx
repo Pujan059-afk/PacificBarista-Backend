@@ -56,10 +56,10 @@ const TermsOfService = () => {
       <Helmet>
         <title>Terms of Service | Pacific Barista Academy</title>
         <meta name="description" content="Pacific Barista Academy Terms of Service — understand the terms governing course enrollment, payments, and use of our services." />
-        <link rel="canonical" href="https://www.pacificbarista.com/terms" />
+        <link rel="canonical" href="https://pacificbarista.com.np/terms" />
         <meta property="og:title" content="Terms of Service | Pacific Barista Academy" />
         <meta property="og:description" content="Understand the terms governing course enrollment, payments, and use of our services." />
-        <meta property="og:url" content="https://www.pacificbarista.com/terms" />
+        <meta property="og:url" content="https://pacificbarista.com.np/terms" />
       </Helmet>
 
       <section className="relative pt-36 pb-20 bg-gradient-to-br from-primary via-primary to-secondary overflow-hidden">

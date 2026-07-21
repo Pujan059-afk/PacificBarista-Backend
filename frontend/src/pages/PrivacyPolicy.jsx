@@ -48,10 +48,10 @@ const PrivacyPolicy = () => {
       <Helmet>
         <title>Privacy Policy | Pacific Barista Academy</title>
         <meta name="description" content="Pacific Barista Academy Privacy Policy — learn how we collect, use, and protect your personal information." />
-        <link rel="canonical" href="https://www.pacificbarista.com/privacy" />
+        <link rel="canonical" href="https://pacificbarista.com.np/privacy" />
         <meta property="og:title" content="Privacy Policy | Pacific Barista Academy" />
         <meta property="og:description" content="Learn how Pacific Barista Academy collects, uses, and protects your personal information." />
-        <meta property="og:url" content="https://www.pacificbarista.com/privacy" />
+        <meta property="og:url" content="https://pacificbarista.com.np/privacy" />
       </Helmet>
 
       <section className="relative pt-36 pb-20 bg-gradient-to-br from-primary via-primary to-secondary overflow-hidden">

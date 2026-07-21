@@ -64,11 +64,11 @@ const VerifyCertificate = () => {
       <Helmet>
         <title>Verify Certificate | Pacific Barista Academy</title>
         <meta name="description" content="Verify the authenticity of Pacific Barista Academy certificates. Enter your certificate ID to instantly confirm credentials." />
-        <link rel="canonical" href="https://www.pacificbarista.com/verify" />
+        <link rel="canonical" href="https://pacificbarista.com.np/verify" />
         <meta property="og:title" content="Verify Certificate | Pacific Barista Academy" />
         <meta property="og:description" content="Instantly verify the authenticity of a Pacific Barista Academy certificate." />
-        <meta property="og:url" content="https://www.pacificbarista.com/verify" />
-        <meta property="og:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta property="og:url" content="https://pacificbarista.com.np/verify" />
+        <meta property="og:image" content="https://pacificbarista.com.np/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Verify Certificate | Pacific Barista Academy" />
         <meta name="twitter:description" content="Instantly verify the authenticity of a Pacific Barista Academy certificate." />
@@ -251,9 +251,16 @@ const VerifyCertificate = () => {
                             <img
                               src={result.certificate.qrCode.url}
                               alt="Certificate QR Code"
-                              className="w-28 h-28 rounded-lg border border-primary/10"
+                              className="w-32 h-32 rounded-lg border border-primary/10 mx-auto"
                             />
-                            <p className="font-body text-[10px] text-text/30 mt-1.5 tracking-wide">Scan to verify</p>
+                            <p className="font-body text-[11px] text-text/40 mt-2 tracking-wide">Scan to verify authenticity</p>
+                            <a
+                              href={result.certificate.qrCode.url}
+                              download={`QR-${result.certificate.certificateId}.png`}
+                              className="inline-block mt-2 font-body text-xs text-accent hover:text-accent/70 font-medium transition-colors"
+                            >
+                              Download QR Code
+                            </a>
                           </div>
                         </div>
                       )}

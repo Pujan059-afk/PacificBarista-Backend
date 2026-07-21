@@ -62,11 +62,11 @@ const Certifications = () => (
     <Helmet>
       <title>Professional Certifications | Pacific Barista Academy</title>
       <meta name="description" content="Earn industry-recognized barista certifications at Pacific Barista Academy. From foundation to master level, start your coffee career journey." />
-      <link rel="canonical" href="https://www.pacificbarista.com/certifications" />
+      <link rel="canonical" href="https://pacificbarista.com.np/certifications" />
       <meta property="og:title" content="Professional Certifications | Pacific Barista Academy" />
       <meta property="og:description" content="Earn industry-recognized barista certifications. Start your coffee career journey today." />
-      <meta property="og:url" content="https://www.pacificbarista.com/certifications" />
-      <meta property="og:image" content="https://www.pacificbarista.com/og-image.jpg" />
+      <meta property="og:url" content="https://pacificbarista.com.np/certifications" />
+      <meta property="og:image" content="https://pacificbarista.com.np/og-image.jpg" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="Professional Certifications | Pacific Barista Academy" />
       <meta name="twitter:description" content="Earn industry-recognized barista certifications. Start your coffee career journey today." />

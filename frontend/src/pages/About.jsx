@@ -64,15 +64,15 @@ const About = () => {
       <Helmet>
         <title>About Us | Pacific Barista Academy</title>
         <meta name="description" content="Discover the story behind Pacific Barista Academy — our mission, values, world-class training facility, and passion for coffee education since 2015." />
-        <link rel="canonical" href="https://www.pacificbarista.com/about" />
+        <link rel="canonical" href="https://pacificbarista.com.np/about" />
         <meta property="og:title" content="About Us | Pacific Barista Academy" />
         <meta property="og:description" content="Discover the story behind Pacific Barista Academy — our mission, values, and passion for coffee education since 2015." />
-        <meta property="og:url" content="https://www.pacificbarista.com/about" />
-        <meta property="og:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta property="og:url" content="https://pacificbarista.com.np/about" />
+        <meta property="og:image" content="https://pacificbarista.com.np/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About Us | Pacific Barista Academy" />
         <meta name="twitter:description" content="Discover the story behind Pacific Barista Academy — our mission, values, and passion for coffee education." />
-        <meta name="twitter:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://pacificbarista.com.np/og-image.jpg" />
       </Helmet>
 
       <section className="relative pt-36 pb-28 bg-gradient-to-br from-primary via-primary to-secondary overflow-hidden">

@@ -90,11 +90,11 @@ const Testimonials = () => {
       <Helmet>
         <title>Student Success Stories | Pacific Barista Academy</title>
         <meta name="description" content="Read success stories from Pacific Barista Academy graduates. Discover how our training has transformed careers and lives." />
-        <link rel="canonical" href="https://www.pacificbarista.com/testimonials" />
+        <link rel="canonical" href="https://pacificbarista.com.np/testimonials" />
         <meta property="og:title" content="Student Success Stories | Pacific Barista Academy" />
         <meta property="og:description" content="Read success stories from Pacific Barista Academy graduates." />
-        <meta property="og:url" content="https://www.pacificbarista.com/testimonials" />
-        <meta property="og:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta property="og:url" content="https://pacificbarista.com.np/testimonials" />
+        <meta property="og:image" content="https://pacificbarista.com.np/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Student Success Stories | Pacific Barista Academy" />
         <meta name="twitter:description" content="Read success stories from Pacific Barista Academy graduates." />

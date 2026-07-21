@@ -202,6 +202,13 @@ const ManageCertificates = () => {
                   >
                     <td className="py-3 pr-4">
                       <div className="flex items-center gap-2">
+                        {c.photo?.url ? (
+                          <img src={c.photo.url} alt="" className="w-7 h-7 rounded-full object-cover border border-primary/10 shrink-0" />
+                        ) : (
+                          <div className="w-7 h-7 rounded-full bg-accent/10 flex items-center justify-center text-accent font-body font-bold text-[10px] shrink-0">
+                            {c.studentName?.charAt(0)?.toUpperCase()}
+                          </div>
+                        )}
                         <span className="font-mono text-sm text-accent font-medium">{c.certificateId}</span>
                         <button onClick={() => handleCopy(c.certificateId)} className="p-1 rounded hover:bg-primary/5 text-text/30 hover:text-accent transition-colors" title="Copy ID">
                           <FiCopy className="w-3.5 h-3.5" />
@@ -209,16 +216,7 @@ const ManageCertificates = () => {
                       </div>
                     </td>
                     <td className="py-3 pr-4">
-                      <div className="flex items-center gap-2.5">
-                        {c.photo?.url ? (
-                          <img src={c.photo.url} alt="" className="w-8 h-8 rounded-full object-cover border border-primary/10 shrink-0" />
-                        ) : (
-                          <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-body font-bold text-xs shrink-0">
-                            {c.studentName?.charAt(0)?.toUpperCase()}
-                          </div>
-                        )}
-                        <p className="font-body text-sm text-text font-medium">{c.studentName}</p>
-                      </div>
+                      <p className="font-body text-sm text-text font-medium">{c.studentName}</p>
                     </td>
                     <td className="py-3 pr-4 hidden md:table-cell font-body text-sm text-text/70">{c.courseName}</td>
                     <td className="py-3 pr-4 hidden sm:table-cell font-body text-sm text-text/50">

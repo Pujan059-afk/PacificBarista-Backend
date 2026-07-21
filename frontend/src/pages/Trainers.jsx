@@ -98,11 +98,11 @@ const Trainers = () => {
       <Helmet>
         <title>Our Expert Trainers | Pacific Barista Academy</title>
         <meta name="description" content="Meet our world-class barista trainers at Pacific Barista Academy. Industry experts dedicated to helping you master the art of coffee." />
-        <link rel="canonical" href="https://www.pacificbarista.com/trainers" />
+        <link rel="canonical" href="https://pacificbarista.com.np/trainers" />
         <meta property="og:title" content="Our Expert Trainers | Pacific Barista Academy" />
         <meta property="og:description" content="Meet our world-class barista trainers. Industry experts dedicated to helping you master the art of coffee." />
-        <meta property="og:url" content="https://www.pacificbarista.com/trainers" />
-        <meta property="og:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta property="og:url" content="https://pacificbarista.com.np/trainers" />
+        <meta property="og:image" content="https://pacificbarista.com.np/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Our Expert Trainers | Pacific Barista Academy" />
         <meta name="twitter:description" content="Meet our world-class barista trainers at Pacific Barista Academy." />

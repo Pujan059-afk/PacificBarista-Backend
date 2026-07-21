@@ -15,15 +15,15 @@ const Home = () => {
       <Helmet>
         <title>Pacific Barista Academy | Premium Barista Training in Pokhara, Nepal</title>
         <meta name="description" content="Pacific Barista Academy offers world-class barista training in Pokhara, Nepal. Learn espresso, latte art, and earn industry-recognized certifications from expert instructors." />
-        <link rel="canonical" href="https://www.pacificbarista.com/" />
+        <link rel="canonical" href="https://pacificbarista.com.np/" />
         <meta property="og:title" content="Pacific Barista Academy | Premium Barista Training" />
         <meta property="og:description" content="World-class barista training in Pokhara, Nepal. Learn espresso, latte art, and earn industry-recognized certifications." />
-        <meta property="og:url" content="https://www.pacificbarista.com/" />
-        <meta property="og:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta property="og:url" content="https://pacificbarista.com.np/" />
+        <meta property="og:image" content="https://pacificbarista.com.np/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Pacific Barista Academy | Premium Barista Training" />
         <meta name="twitter:description" content="World-class barista training in Pokhara, Nepal." />
-        <meta name="twitter:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://pacificbarista.com.np/og-image.jpg" />
       </Helmet>
       <Hero />
       <WhyChoose />

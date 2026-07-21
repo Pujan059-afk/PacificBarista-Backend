@@ -58,11 +58,11 @@ const Blog = () => {
       <Helmet>
         <title>Our Blog | Pacific Barista Academy</title>
         <meta name="description" content="Explore the Pacific Barista Academy blog for coffee tips, training guides, industry insights, and barista stories." />
-        <link rel="canonical" href="https://www.pacificbarista.com/blog" />
+        <link rel="canonical" href="https://pacificbarista.com.np/blog" />
         <meta property="og:title" content="Our Blog | Pacific Barista Academy" />
         <meta property="og:description" content="Explore the Pacific Barista Academy blog for coffee tips and training guides." />
-        <meta property="og:url" content="https://www.pacificbarista.com/blog" />
-        <meta property="og:image" content="https://www.pacificbarista.com/og-image.jpg" />
+        <meta property="og:url" content="https://pacificbarista.com.np/blog" />
+        <meta property="og:image" content="https://pacificbarista.com.np/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Our Blog | Pacific Barista Academy" />
         <meta name="twitter:description" content="Explore the Pacific Barista Academy blog for coffee tips and training guides." />
