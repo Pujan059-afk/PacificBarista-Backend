@@ -20,6 +20,13 @@ const getPublicCertificate = async (req, res) => {
   });
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
   if (certificate.status !== 'Valid') return res.status(404).json({ message: 'Certificate is not valid' });
+
+  if (!certificate.qrCode?.url || certificate.qrCode.url.includes('/verify')) {
+    if (certificate.qrCode.publicId) await deleteFromCloudinary(certificate.qrCode.publicId);
+    certificate.qrCode = await generateQRCode(certificate);
+    await certificate.save();
+  }
+
   res.json({
     certificateId: certificate.certificateId,
     studentName: certificate.studentName,
@@ -50,7 +57,8 @@ const verifyCertificate = async (req, res) => {
     });
   }
 
-  if (!certificate.qrCode?.url) {
+  if (!certificate.qrCode?.url || certificate.qrCode.url.includes('/verify')) {
+    if (certificate.qrCode?.publicId) await deleteFromCloudinary(certificate.qrCode.publicId);
     certificate.qrCode = await generateQRCode(certificate);
     await certificate.save();
   }
@@ -178,6 +186,20 @@ const deleteCertificate = async (req, res) => {
   res.json({ message: 'Certificate deleted' });
 };
 
+const regenerateAllQRCodes = async (req, res) => {
+  const certificates = await Certificate.find();
+  let regenerated = 0;
+  for (const cert of certificates) {
+    if (!cert.qrCode?.url || cert.qrCode.url.includes('/verify')) {
+      if (cert.qrCode?.publicId) await deleteFromCloudinary(cert.qrCode.publicId);
+      cert.qrCode = await generateQRCode(cert);
+      await cert.save();
+      regenerated++;
+    }
+  }
+  res.json({ total: certificates.length, regenerated });
+};
+
 module.exports = {
   getPublicCertificate,
   verifyCertificate,
@@ -186,4 +208,5 @@ module.exports = {
   getCertificate,
   updateCertificate,
   deleteCertificate,
+  regenerateAllQRCodes,
 };
