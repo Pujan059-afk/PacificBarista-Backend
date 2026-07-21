@@ -4,13 +4,6 @@ import { FaInstagram, FaFacebookF, FaYoutube, FaTiktok } from 'react-icons/fa';
 import { NAV_LINKS } from '../../utils/constants';
 import logo from '../../assets/pacificbarista.jpg';
 
-const socialIcons = {
-  FaInstagram: FaInstagram,
-  FaFacebook: FaFacebookF,
-  FaYoutube: FaYoutube,
-  FaTiktok: FaTiktok,
-};
-
 const Footer = () => {
   return (
     <footer className="bg-primary text-white">

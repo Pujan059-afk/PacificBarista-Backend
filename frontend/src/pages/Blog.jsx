@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiSearch, FiCalendar, FiUser, FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
 import PageTransition from '../components/common/PageTransition';
 import Loader from '../components/common/Loader';

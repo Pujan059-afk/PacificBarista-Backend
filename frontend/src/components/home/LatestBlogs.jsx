@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { fadeIn, staggerContainer } from '../../animations';
 import SectionTitle from '../ui/SectionTitle';
 import Button from '../ui/Button';
-import Loader from '../common/Loader';
 import api from '../../services/api';
 import { IconArrowRight, IconCalendar, IconFlask, IconPalette, IconCoffee } from '../ui/Icons';
 

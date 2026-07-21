@@ -23,10 +23,3 @@ export const COURSE_LEVELS = [
   { value: 'Intermediate', label: 'Intermediate' },
   { value: 'Advanced', label: 'Advanced' },
 ];
-
-export const SOCIAL_LINKS = [
-  { name: 'Facebook', url: 'https://www.facebook.com/search/top?q=pacific%20barista', icon: 'FaFacebook' },
-  { name: 'Instagram', url: 'https://www.instagram.com/baristapacific/', icon: 'FaInstagram' },
-  { name: 'TikTok', url: 'https://www.tiktok.com/@pacific_barista', icon: 'FaTiktok' },
-  { name: 'YouTube', url: 'https://youtube.com/@pacificbarista', icon: 'FaYoutube' },
-];

@@ -39,23 +39,3 @@ export const textReveal = {
     },
   },
 };
-
-export const scaleOnHover = {
-  rest: { scale: 1 },
-  hover: { scale: 1.05, transition: { duration: 0.3, ease: 'easeOut' } },
-  tap: { scale: 0.95 },
-};
-
-export const slideInFromBottom = (delay = 0) => ({
-  hidden: { y: 60, opacity: 0 },
-  show: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: 'tween',
-      duration: 0.6,
-      delay,
-      ease: [0.25, 0.25, 0.25, 0.75],
-    },
-  },
-});

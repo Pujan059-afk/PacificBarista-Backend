@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Blog = require('../models/Blog');
-const { slugify, uploadToCloudinary, deleteFromCloudinary, formatContent } = require('../utils/helpers');
+const { slugify, uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
 
 const getBlogs = async (req, res) => {
   const { page = 1, limit = 10, search, category } = req.query;

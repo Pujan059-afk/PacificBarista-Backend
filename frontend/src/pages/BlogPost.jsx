@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link, useParams } from 'react-router-dom';
-import { FiCalendar, FiUser, FiArrowLeft, FiLinkedin, FiTwitter, FiFacebook, FiArrowRight, FiClock } from 'react-icons/fi';
+import { FiCalendar, FiUser, FiArrowLeft, FiLinkedin, FiTwitter, FiFacebook, FiClock } from 'react-icons/fi';
 import Badge from '../components/ui/Badge';
 import PageTransition from '../components/common/PageTransition';
 import Loader from '../components/common/Loader';

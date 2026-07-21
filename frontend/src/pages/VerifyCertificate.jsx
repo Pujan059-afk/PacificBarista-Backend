@@ -7,7 +7,7 @@ import {
 } from 'react-icons/fi';
 import api from '../services/api';
 import PageTransition from '../components/common/PageTransition';
-import { fadeIn, staggerContainer } from '../animations/index';
+import { fadeIn } from '../animations/index';
 
 /* ─── small helper ─── */
 const InfoRow = ({ icon: Icon, label, value, delay = 0 }) => (

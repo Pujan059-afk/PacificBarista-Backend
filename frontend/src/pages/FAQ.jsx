@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown, FiSearch } from 'react-icons/fi';
-import SectionTitle from '../components/ui/SectionTitle';
 import PageTransition from '../components/common/PageTransition';
 import { fadeIn, staggerContainer } from '../animations/index';
 
