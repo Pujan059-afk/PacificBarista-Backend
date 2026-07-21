@@ -5,25 +5,8 @@ const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers')
 const VERIFICATION_URL = 'https://pacificbarista.com.np/verify';
 
 const generateQRCode = async (certificate) => {
-  const issueDate = new Date(certificate.issueDate).toLocaleDateString('en-US', {
-    month: 'long', day: 'numeric', year: 'numeric',
-  });
-  const text = [
-    '╔══════════════════════════════╗',
-    '   PACIFIC BARISTA ACADEMY',
-    '   Certificate of Completion',
-    '╚══════════════════════════════╝',
-    '',
-    `Certificate ID : ${certificate.certificateId}`,
-    `Student Name   : ${certificate.studentName}`,
-    `Course         : ${certificate.courseName}`,
-    `Issue Date     : ${issueDate}`,
-    `Status         : ${certificate.status}`,
-    '',
-    `Verify online: ${VERIFICATION_URL}?code=${certificate.certificateId}`,
-  ].join('\n');
-
-  const buffer = await QRCode.toBuffer(text, {
+  const url = `${VERIFICATION_URL}?code=${certificate.certificateId}`;
+  const buffer = await QRCode.toBuffer(url, {
     width: 400,
     margin: 2,
     color: { dark: '#1a1a1a', light: '#ffffff' },
