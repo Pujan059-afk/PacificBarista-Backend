@@ -209,7 +209,16 @@ const ManageCertificates = () => {
                       </div>
                     </td>
                     <td className="py-3 pr-4">
-                      <p className="font-body text-sm text-text font-medium">{c.studentName}</p>
+                      <div className="flex items-center gap-2.5">
+                        {c.photo?.url ? (
+                          <img src={c.photo.url} alt="" className="w-8 h-8 rounded-full object-cover border border-primary/10 shrink-0" />
+                        ) : (
+                          <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-body font-bold text-xs shrink-0">
+                            {c.studentName?.charAt(0)?.toUpperCase()}
+                          </div>
+                        )}
+                        <p className="font-body text-sm text-text font-medium">{c.studentName}</p>
+                      </div>
                     </td>
                     <td className="py-3 pr-4 hidden md:table-cell font-body text-sm text-text/70">{c.courseName}</td>
                     <td className="py-3 pr-4 hidden sm:table-cell font-body text-sm text-text/50">
