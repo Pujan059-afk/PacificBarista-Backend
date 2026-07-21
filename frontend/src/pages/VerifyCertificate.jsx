@@ -244,6 +244,20 @@ const VerifyCertificate = () => {
                         />
                       </div>
 
+                      {/* QR Code */}
+                      {result.certificate.qrCode?.url && (
+                        <div className="px-8 pb-6 flex justify-center">
+                          <div className="text-center">
+                            <img
+                              src={result.certificate.qrCode.url}
+                              alt="Certificate QR Code"
+                              className="w-28 h-28 rounded-lg border border-primary/10"
+                            />
+                            <p className="font-body text-[10px] text-text/30 mt-1.5 tracking-wide">Scan to verify</p>
+                          </div>
+                        </div>
+                      )}
+
                       {/* footer */}
                       <div className="mx-8 mb-8 pt-5 border-t border-primary/10 flex items-center justify-between">
                         <p className="font-body text-[11px] text-text/30 tracking-wide">

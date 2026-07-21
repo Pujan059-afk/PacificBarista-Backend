@@ -5,7 +5,7 @@ import api from '../../services/api';
 import { useApp } from '../../contexts/AppContext';
 import PageTransition from '../../components/common/PageTransition';
 import Button from '../../components/ui/Button';
-import { FiPlus, FiTrash2, FiEdit2, FiCopy, FiX, FiSearch, FiImage } from 'react-icons/fi';
+import { FiPlus, FiTrash2, FiEdit2, FiCopy, FiX, FiSearch, FiImage, FiDownload } from 'react-icons/fi';
 
 const emptyForm = {
   certificateId: '',
@@ -27,6 +27,7 @@ const ManageCertificates = () => {
   const [deleting, setDeleting] = useState(false);
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState('');
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const ManageCertificates = () => {
     setForm(emptyForm);
     setPhotoFile(null);
     setPhotoPreview('');
+    setQrCodeUrl('');
     setModalOpen(true);
   };
 
@@ -65,6 +67,7 @@ const ManageCertificates = () => {
       });
       setPhotoFile(null);
       setPhotoPreview(c.photo?.url || '');
+      setQrCodeUrl(c.qrCode?.url || '');
       setModalOpen(true);
     } catch {
       showToast('Failed to load certificate', 'error');
@@ -222,6 +225,11 @@ const ManageCertificates = () => {
                         <button onClick={() => openEdit(c._id)} className="p-2 rounded-lg hover:bg-accent/10 text-text/40 hover:text-accent transition-colors" title="Edit">
                           <FiEdit2 className="w-4 h-4" />
                         </button>
+                        {c.qrCode?.url && (
+                          <a href={c.qrCode.url} download={`QR-${c.certificateId}.png`} className="p-2 rounded-lg hover:bg-accent/10 text-text/40 hover:text-accent transition-colors" title="Download QR Code">
+                            <FiDownload className="w-4 h-4" />
+                          </a>
+                        )}
                         <button onClick={() => setDeleteId(c._id)} className="p-2 rounded-lg hover:bg-red-50 text-text/40 hover:text-red-500 transition-colors" title="Delete">
                           <FiTrash2 className="w-4 h-4" />
                         </button>
@@ -333,6 +341,17 @@ const ManageCertificates = () => {
                     </label>
                   )}
                 </div>
+                {editId && qrCodeUrl && (
+                  <div>
+                    <label className="block font-body text-sm text-text/60 mb-1.5">QR Code</label>
+                    <div className="flex items-center gap-3">
+                      <img src={qrCodeUrl} alt="QR Code" className="w-20 h-20 rounded-lg border border-primary/10" />
+                      <a href={qrCodeUrl} download={`QR-${form.certificateId}.png`} className="text-xs text-accent hover:text-accent/70 font-body font-medium flex items-center gap-1">
+                        <FiDownload className="w-3.5 h-3.5" /> Download
+                      </a>
+                    </div>
+                  </div>
+                )}
                 <div className="flex gap-3 justify-end pt-2">
                   <button type="button" onClick={() => setModalOpen(false)} className="px-4 py-2 rounded-lg font-body text-sm text-text/60 hover:bg-primary/5">Cancel</button>
                   <Button type="submit" size="sm" loading={saving}>{editId ? 'Update' : 'Issue'}</Button>
