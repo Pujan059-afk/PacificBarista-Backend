@@ -33,6 +33,7 @@ const getPublicCertificate = async (req, res) => {
     courseName: certificate.courseName,
     issueDate: certificate.issueDate,
     description: certificate.description,
+    headline: certificate.headline,
     photo: certificate.photo,
     qrCode: certificate.qrCode,
     status: certificate.status,
@@ -71,6 +72,7 @@ const verifyCertificate = async (req, res) => {
       courseName: certificate.courseName,
       issueDate: certificate.issueDate,
       description: certificate.description,
+      headline: certificate.headline,
       photo: certificate.photo,
       qrCode: certificate.qrCode,
       status: certificate.status,
@@ -79,7 +81,7 @@ const verifyCertificate = async (req, res) => {
 };
 
 const createCertificate = async (req, res) => {
-  let { certificateId, studentName, courseName, issueDate, description } = req.body;
+  let { certificateId, studentName, courseName, issueDate, description, headline } = req.body;
 
   if (!certificateId) {
     let unique = false;
@@ -106,6 +108,7 @@ const createCertificate = async (req, res) => {
     courseName,
     issueDate,
     description: description || '',
+    headline: headline || '',
     photo,
   });
 
@@ -133,7 +136,7 @@ const getCertificate = async (req, res) => {
 };
 
 const updateCertificate = async (req, res) => {
-  const { certificateId, studentName, courseName, issueDate, description, status } = req.body;
+  const { certificateId, studentName, courseName, issueDate, description, headline, status } = req.body;
 
   const certificate = await Certificate.findById(req.params.id);
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
@@ -159,6 +162,7 @@ const updateCertificate = async (req, res) => {
   certificate.courseName = courseName || certificate.courseName;
   certificate.issueDate = issueDate || certificate.issueDate;
   certificate.description = description !== undefined ? description : certificate.description;
+  certificate.headline = headline !== undefined ? headline : certificate.headline;
   certificate.status = status || certificate.status;
   certificate.photo = photo;
 

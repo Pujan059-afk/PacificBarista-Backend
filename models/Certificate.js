@@ -29,6 +29,10 @@ const certificateSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  headline: {
+    type: String,
+    default: '',
+  },
   qrCode: {
     url: { type: String, default: '' },
     publicId: { type: String, default: '' },
