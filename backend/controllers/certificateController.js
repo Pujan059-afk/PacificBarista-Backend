@@ -1,4 +1,5 @@
 const Certificate = require('../models/Certificate');
+const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
 
 const verifyCertificate = async (req, res) => {
   const { certificateId } = req.body;
@@ -26,6 +27,7 @@ const verifyCertificate = async (req, res) => {
       courseName: certificate.courseName,
       issueDate: certificate.issueDate,
       grade: certificate.grade,
+      photo: certificate.photo,
       status: certificate.status,
     },
   });
@@ -43,12 +45,18 @@ const createCertificate = async (req, res) => {
     }
   }
 
+  let photo = { url: '', publicId: '' };
+  if (req.file) {
+    photo = await uploadToCloudinary(req.file.buffer, 'certificates');
+  }
+
   const certificate = await Certificate.create({
     certificateId,
     studentName,
     courseName,
     issueDate,
     grade,
+    photo,
   });
 
   res.status(201).json(certificate);
@@ -81,18 +89,37 @@ const updateCertificate = async (req, res) => {
     }
   }
 
-  const certificate = await Certificate.findByIdAndUpdate(
-    req.params.id,
-    { certificateId: certificateId?.trim().toUpperCase(), studentName, courseName, issueDate, grade, status },
-    { new: true, runValidators: true }
-  );
+  const certificate = await Certificate.findById(req.params.id);
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
-  res.json(certificate);
+
+  let photo = certificate.photo;
+  if (req.file) {
+    if (certificate.photo.publicId) {
+      await deleteFromCloudinary(certificate.photo.publicId);
+    }
+    photo = await uploadToCloudinary(req.file.buffer, 'certificates');
+  }
+
+  certificate.certificateId = certificateId?.trim().toUpperCase() || certificate.certificateId;
+  certificate.studentName = studentName || certificate.studentName;
+  certificate.courseName = courseName || certificate.courseName;
+  certificate.issueDate = issueDate || certificate.issueDate;
+  certificate.grade = grade !== undefined ? grade : certificate.grade;
+  certificate.status = status || certificate.status;
+  certificate.photo = photo;
+
+  const updated = await certificate.save();
+  res.json(updated);
 };
 
 const deleteCertificate = async (req, res) => {
   const certificate = await Certificate.findById(req.params.id);
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
+
+  if (certificate.photo.publicId) {
+    await deleteFromCloudinary(certificate.photo.publicId);
+  }
+
   await certificate.deleteOne();
   res.json({ message: 'Certificate deleted' });
 };
