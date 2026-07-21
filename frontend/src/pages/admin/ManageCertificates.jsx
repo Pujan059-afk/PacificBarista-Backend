@@ -12,6 +12,7 @@ const emptyForm = {
   studentName: '',
   courseName: '',
   issueDate: '',
+  description: '',
 };
 
 const ManageCertificates = () => {
@@ -64,6 +65,7 @@ const ManageCertificates = () => {
         studentName: c.studentName || '',
         courseName: c.courseName || '',
         issueDate: c.issueDate ? c.issueDate.slice(0, 10) : '',
+        description: c.description || '',
       });
       setPhotoFile(null);
       setPhotoPreview(c.photo?.url || '');
@@ -96,6 +98,7 @@ const ManageCertificates = () => {
       formData.append('studentName', form.studentName);
       formData.append('courseName', form.courseName);
       formData.append('issueDate', form.issueDate);
+      formData.append('description', form.description);
       if (photoFile) {
         formData.append('photo', photoFile);
       }
@@ -315,6 +318,16 @@ const ManageCertificates = () => {
                     value={form.issueDate}
                     onChange={(e) => setForm({ ...form, issueDate: e.target.value })}
                     className="w-full px-4 py-2.5 bg-cream border border-primary/10 rounded-lg text-text font-body text-sm outline-none focus:border-accent"
+                  />
+                </div>
+                <div>
+                  <label className="block font-body text-sm text-text/60 mb-1.5">Description (optional)</label>
+                  <textarea
+                    value={form.description}
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    rows={3}
+                    className="w-full px-4 py-2.5 bg-cream border border-primary/10 rounded-lg text-text font-body text-sm outline-none focus:border-accent resize-none"
+                    placeholder="Brief description of the certificate or achievement..."
                   />
                 </div>
                 <div>

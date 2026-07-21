@@ -16,6 +16,7 @@ import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
 import Enroll from './pages/Enroll';
 import VerifyCertificate from './pages/VerifyCertificate';
+import CertificateDetails from './pages/CertificateDetails';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import NotFound from './pages/NotFound';
@@ -74,6 +75,7 @@ const App = () => {
               <Route path="faq" element={<FAQ />} />
               <Route path="enroll" element={<Enroll />} />
               <Route path="verify" element={<VerifyCertificate />} />
+              <Route path="certificate/:code" element={<CertificateDetails />} />
               <Route path="privacy" element={<PrivacyPolicy />} />
               <Route path="terms" element={<TermsOfService />} />
               <Route path="*" element={<NotFound />} />

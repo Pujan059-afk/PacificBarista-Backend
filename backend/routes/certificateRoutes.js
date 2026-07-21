@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {
+  getPublicCertificate,
   verifyCertificate,
   createCertificate,
   getCertificates,
@@ -11,6 +12,7 @@ const {
 const auth = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
+router.get('/view/:code', getPublicCertificate);
 router.post('/verify', verifyCertificate);
 router.post('/', auth, upload.single('photo'), createCertificate);
 router.get('/', auth, getCertificates);
