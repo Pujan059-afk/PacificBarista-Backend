@@ -1,5 +1,17 @@
 const Certificate = require('../models/Certificate');
+const QRCode = require('qrcode');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
+
+const VERIFICATION_URL = 'https://www.pacificbarista.com/verify';
+
+const generateQRCode = async (certificateId) => {
+  const buffer = await QRCode.toBuffer(`${VERIFICATION_URL}?code=${certificateId}`, {
+    width: 300,
+    margin: 2,
+    color: { dark: '#1a1a1a', light: '#ffffff' },
+  });
+  return uploadToCloudinary(buffer, 'certificates/qr');
+};
 
 const verifyCertificate = async (req, res) => {
   const { certificateId } = req.body;
@@ -27,6 +39,7 @@ const verifyCertificate = async (req, res) => {
       courseName: certificate.courseName,
       issueDate: certificate.issueDate,
       photo: certificate.photo,
+      qrCode: certificate.qrCode,
       status: certificate.status,
     },
   });
@@ -42,6 +55,11 @@ const createCertificate = async (req, res) => {
       const exists = await Certificate.findOne({ certificateId });
       if (!exists) unique = true;
     }
+  } else {
+    const exists = await Certificate.findOne({ certificateId: certificateId.trim().toUpperCase() });
+    if (exists) {
+      return res.status(400).json({ message: 'Certificate ID already exists' });
+    }
   }
 
   let photo = { url: '', publicId: '' };
@@ -49,12 +67,15 @@ const createCertificate = async (req, res) => {
     photo = await uploadToCloudinary(req.file.buffer, 'certificates');
   }
 
+  const qrCode = await generateQRCode(certificateId.trim().toUpperCase());
+
   const certificate = await Certificate.create({
-    certificateId,
+    certificateId: certificateId.trim().toUpperCase(),
     studentName,
     courseName,
     issueDate,
     photo,
+    qrCode,
   });
 
   res.status(201).json(certificate);
@@ -80,15 +101,21 @@ const getCertificate = async (req, res) => {
 const updateCertificate = async (req, res) => {
   const { certificateId, studentName, courseName, issueDate, status } = req.body;
 
-  if (certificateId) {
-    const existing = await Certificate.findOne({ certificateId: certificateId.trim().toUpperCase() });
-    if (existing && existing._id.toString() !== req.params.id) {
-      return res.status(400).json({ message: 'Certificate ID already exists' });
-    }
-  }
-
   const certificate = await Certificate.findById(req.params.id);
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
+
+  const newCertId = certificateId?.trim().toUpperCase();
+  if (newCertId && newCertId !== certificate.certificateId) {
+    const existing = await Certificate.findOne({ certificateId: newCertId });
+    if (existing) {
+      return res.status(400).json({ message: 'Certificate ID already exists' });
+    }
+    if (certificate.qrCode.publicId) {
+      await deleteFromCloudinary(certificate.qrCode.publicId);
+    }
+    certificate.qrCode = await generateQRCode(newCertId);
+    certificate.certificateId = newCertId;
+  }
 
   let photo = certificate.photo;
   if (req.file) {
@@ -98,7 +125,6 @@ const updateCertificate = async (req, res) => {
     photo = await uploadToCloudinary(req.file.buffer, 'certificates');
   }
 
-  certificate.certificateId = certificateId?.trim().toUpperCase() || certificate.certificateId;
   certificate.studentName = studentName || certificate.studentName;
   certificate.courseName = courseName || certificate.courseName;
   certificate.issueDate = issueDate || certificate.issueDate;
@@ -115,6 +141,9 @@ const deleteCertificate = async (req, res) => {
 
   if (certificate.photo.publicId) {
     await deleteFromCloudinary(certificate.photo.publicId);
+  }
+  if (certificate.qrCode.publicId) {
+    await deleteFromCloudinary(certificate.qrCode.publicId);
   }
 
   await certificate.deleteOne();

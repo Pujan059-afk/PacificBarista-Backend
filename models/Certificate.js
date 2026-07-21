@@ -25,6 +25,10 @@ const certificateSchema = new mongoose.Schema({
     url: { type: String, default: '' },
     publicId: { type: String, default: '' },
   },
+  qrCode: {
+    url: { type: String, default: '' },
+    publicId: { type: String, default: '' },
+  },
   status: {
     type: String,
     enum: ['Valid', 'Revoked'],
