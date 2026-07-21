@@ -4,9 +4,27 @@ const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers')
 
 const VERIFICATION_URL = 'https://www.pacificbarista.com/verify';
 
-const generateQRCode = async (certificateId) => {
-  const buffer = await QRCode.toBuffer(`${VERIFICATION_URL}?code=${certificateId}`, {
-    width: 300,
+const generateQRCode = async (certificate) => {
+  const issueDate = new Date(certificate.issueDate).toLocaleDateString('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric',
+  });
+  const text = [
+    '╔══════════════════════════════╗',
+    '   PACIFIC BARISTA ACADEMY',
+    '   Certificate of Completion',
+    '╚══════════════════════════════╝',
+    '',
+    `Certificate ID : ${certificate.certificateId}`,
+    `Student Name   : ${certificate.studentName}`,
+    `Course         : ${certificate.courseName}`,
+    `Issue Date     : ${issueDate}`,
+    `Status         : ${certificate.status}`,
+    '',
+    `Verify online: ${VERIFICATION_URL}?code=${certificate.certificateId}`,
+  ].join('\n');
+
+  const buffer = await QRCode.toBuffer(text, {
+    width: 400,
     margin: 2,
     color: { dark: '#1a1a1a', light: '#ffffff' },
   });
@@ -67,16 +85,16 @@ const createCertificate = async (req, res) => {
     photo = await uploadToCloudinary(req.file.buffer, 'certificates');
   }
 
-  const qrCode = await generateQRCode(certificateId.trim().toUpperCase());
-
   const certificate = await Certificate.create({
     certificateId: certificateId.trim().toUpperCase(),
     studentName,
     courseName,
     issueDate,
     photo,
-    qrCode,
   });
+
+  certificate.qrCode = await generateQRCode(certificate);
+  await certificate.save();
 
   res.status(201).json(certificate);
 };
@@ -110,10 +128,6 @@ const updateCertificate = async (req, res) => {
     if (existing) {
       return res.status(400).json({ message: 'Certificate ID already exists' });
     }
-    if (certificate.qrCode.publicId) {
-      await deleteFromCloudinary(certificate.qrCode.publicId);
-    }
-    certificate.qrCode = await generateQRCode(newCertId);
     certificate.certificateId = newCertId;
   }
 
@@ -130,6 +144,11 @@ const updateCertificate = async (req, res) => {
   certificate.issueDate = issueDate || certificate.issueDate;
   certificate.status = status || certificate.status;
   certificate.photo = photo;
+
+  if (certificate.qrCode.publicId) {
+    await deleteFromCloudinary(certificate.qrCode.publicId);
+  }
+  certificate.qrCode = await generateQRCode(certificate);
 
   const updated = await certificate.save();
   res.json(updated);
