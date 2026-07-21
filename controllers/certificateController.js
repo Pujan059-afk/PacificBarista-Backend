@@ -2,7 +2,7 @@ const Certificate = require('../models/Certificate');
 const QRCode = require('qrcode');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
 
-const VERIFICATION_URL = 'https://www.pacificbarista.com/verify';
+const VERIFICATION_URL = 'https://pacificbarista.com.np/verify';
 
 const generateQRCode = async (certificate) => {
   const issueDate = new Date(certificate.issueDate).toLocaleDateString('en-US', {
