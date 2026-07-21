@@ -49,6 +49,11 @@ const verifyCertificate = async (req, res) => {
     });
   }
 
+  if (!certificate.qrCode?.url) {
+    certificate.qrCode = await generateQRCode(certificate);
+    await certificate.save();
+  }
+
   res.json({
     valid: certificate.status === 'Valid',
     certificate: {
