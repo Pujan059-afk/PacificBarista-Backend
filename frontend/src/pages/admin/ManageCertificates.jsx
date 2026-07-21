@@ -8,6 +8,7 @@ import Button from '../../components/ui/Button';
 import { FiPlus, FiTrash2, FiEdit2, FiCopy, FiCheck, FiX, FiSearch } from 'react-icons/fi';
 
 const emptyForm = {
+  certificateId: '',
   studentName: '',
   courseName: '',
   issueDate: '',
@@ -53,6 +54,7 @@ const ManageCertificates = () => {
       const c = res.data;
       setEditId(id);
       setForm({
+        certificateId: c.certificateId || '',
         studentName: c.studentName || '',
         courseName: c.courseName || '',
         issueDate: c.issueDate ? c.issueDate.slice(0, 10) : '',
@@ -227,6 +229,16 @@ const ManageCertificates = () => {
                 </button>
               </div>
               <form onSubmit={handleSave} className="space-y-4">
+                <div>
+                  <label className="block font-body text-sm text-text/60 mb-1.5">Certificate ID (optional)</label>
+                  <input
+                    type="text"
+                    value={form.certificateId}
+                    onChange={(e) => setForm({ ...form, certificateId: e.target.value.toUpperCase() })}
+                    className="w-full px-4 py-2.5 bg-cream border border-primary/10 rounded-lg text-text font-body text-sm outline-none focus:border-accent font-mono tracking-wider uppercase"
+                    placeholder="Leave empty to auto-generate (PBC-XXXX-XXXX)"
+                  />
+                </div>
                 <div>
                   <label className="block font-body text-sm text-text/60 mb-1.5">Student Name</label>
                   <input

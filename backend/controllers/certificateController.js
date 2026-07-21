@@ -72,10 +72,18 @@ const getCertificate = async (req, res) => {
 };
 
 const updateCertificate = async (req, res) => {
-  const { studentName, courseName, issueDate, grade, status } = req.body;
+  const { certificateId, studentName, courseName, issueDate, grade, status } = req.body;
+
+  if (certificateId) {
+    const existing = await Certificate.findOne({ certificateId: certificateId.trim().toUpperCase() });
+    if (existing && existing._id.toString() !== req.params.id) {
+      return res.status(400).json({ message: 'Certificate ID already exists' });
+    }
+  }
+
   const certificate = await Certificate.findByIdAndUpdate(
     req.params.id,
-    { studentName, courseName, issueDate, grade, status },
+    { certificateId: certificateId?.trim().toUpperCase(), studentName, courseName, issueDate, grade, status },
     { new: true, runValidators: true }
   );
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
