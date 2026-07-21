@@ -26,7 +26,6 @@ const verifyCertificate = async (req, res) => {
       studentName: certificate.studentName,
       courseName: certificate.courseName,
       issueDate: certificate.issueDate,
-      grade: certificate.grade,
       photo: certificate.photo,
       status: certificate.status,
     },
@@ -34,7 +33,7 @@ const verifyCertificate = async (req, res) => {
 };
 
 const createCertificate = async (req, res) => {
-  let { certificateId, studentName, courseName, issueDate, grade } = req.body;
+  let { certificateId, studentName, courseName, issueDate } = req.body;
 
   if (!certificateId) {
     let unique = false;
@@ -55,7 +54,6 @@ const createCertificate = async (req, res) => {
     studentName,
     courseName,
     issueDate,
-    grade,
     photo,
   });
 
@@ -80,7 +78,7 @@ const getCertificate = async (req, res) => {
 };
 
 const updateCertificate = async (req, res) => {
-  const { certificateId, studentName, courseName, issueDate, grade, status } = req.body;
+  const { certificateId, studentName, courseName, issueDate, status } = req.body;
 
   if (certificateId) {
     const existing = await Certificate.findOne({ certificateId: certificateId.trim().toUpperCase() });
@@ -104,7 +102,6 @@ const updateCertificate = async (req, res) => {
   certificate.studentName = studentName || certificate.studentName;
   certificate.courseName = courseName || certificate.courseName;
   certificate.issueDate = issueDate || certificate.issueDate;
-  certificate.grade = grade !== undefined ? grade : certificate.grade;
   certificate.status = status || certificate.status;
   certificate.photo = photo;
 

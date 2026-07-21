@@ -12,7 +12,6 @@ const emptyForm = {
   studentName: '',
   courseName: '',
   issueDate: '',
-  grade: '',
 };
 
 const ManageCertificates = () => {
@@ -63,7 +62,6 @@ const ManageCertificates = () => {
         studentName: c.studentName || '',
         courseName: c.courseName || '',
         issueDate: c.issueDate ? c.issueDate.slice(0, 10) : '',
-        grade: c.grade || '',
       });
       setPhotoFile(null);
       setPhotoPreview(c.photo?.url || '');
@@ -95,7 +93,6 @@ const ManageCertificates = () => {
       formData.append('studentName', form.studentName);
       formData.append('courseName', form.courseName);
       formData.append('issueDate', form.issueDate);
-      formData.append('grade', form.grade);
       if (photoFile) {
         formData.append('photo', photoFile);
       }
@@ -303,16 +300,6 @@ const ManageCertificates = () => {
                     value={form.issueDate}
                     onChange={(e) => setForm({ ...form, issueDate: e.target.value })}
                     className="w-full px-4 py-2.5 bg-cream border border-primary/10 rounded-lg text-text font-body text-sm outline-none focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <label className="block font-body text-sm text-text/60 mb-1.5">Grade (optional)</label>
-                  <input
-                    type="text"
-                    value={form.grade}
-                    onChange={(e) => setForm({ ...form, grade: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-cream border border-primary/10 rounded-lg text-text font-body text-sm outline-none focus:border-accent"
-                    placeholder="e.g. A, Distinction, Pass"
                   />
                 </div>
                 <div>
