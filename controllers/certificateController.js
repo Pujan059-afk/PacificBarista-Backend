@@ -2,16 +2,41 @@ const Certificate = require('../models/Certificate');
 const QRCode = require('qrcode');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
 
-const VERIFICATION_URL = 'https://pacificbarista.com.np/verify';
+const CERTIFICATE_PAGE_URL = 'https://pacificbarista.com.np/certificate';
 
 const generateQRCode = async (certificate) => {
-  const url = `${VERIFICATION_URL}?code=${certificate.certificateId}`;
+  const url = `${CERTIFICATE_PAGE_URL}/${certificate.certificateId}`;
   const buffer = await QRCode.toBuffer(url, {
     width: 400,
     margin: 2,
     color: { dark: '#1a1a1a', light: '#ffffff' },
   });
   return uploadToCloudinary(buffer, 'certificates/qr');
+};
+
+const getPublicCertificate = async (req, res) => {
+  const certificate = await Certificate.findOne({
+    certificateId: req.params.code.trim().toUpperCase(),
+  });
+  if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
+  if (certificate.status !== 'Valid') return res.status(404).json({ message: 'Certificate is not valid' });
+
+  if (!certificate.qrCode?.url || certificate.qrCode.url.includes('/verify')) {
+    if (certificate.qrCode.publicId) await deleteFromCloudinary(certificate.qrCode.publicId);
+    certificate.qrCode = await generateQRCode(certificate);
+    await certificate.save();
+  }
+
+  res.json({
+    certificateId: certificate.certificateId,
+    studentName: certificate.studentName,
+    courseName: certificate.courseName,
+    issueDate: certificate.issueDate,
+    description: certificate.description,
+    photo: certificate.photo,
+    qrCode: certificate.qrCode,
+    status: certificate.status,
+  });
 };
 
 const verifyCertificate = async (req, res) => {
@@ -32,7 +57,8 @@ const verifyCertificate = async (req, res) => {
     });
   }
 
-  if (!certificate.qrCode?.url) {
+  if (!certificate.qrCode?.url || certificate.qrCode.url.includes('/verify')) {
+    if (certificate.qrCode?.publicId) await deleteFromCloudinary(certificate.qrCode.publicId);
     certificate.qrCode = await generateQRCode(certificate);
     await certificate.save();
   }
@@ -44,6 +70,7 @@ const verifyCertificate = async (req, res) => {
       studentName: certificate.studentName,
       courseName: certificate.courseName,
       issueDate: certificate.issueDate,
+      description: certificate.description,
       photo: certificate.photo,
       qrCode: certificate.qrCode,
       status: certificate.status,
@@ -52,7 +79,7 @@ const verifyCertificate = async (req, res) => {
 };
 
 const createCertificate = async (req, res) => {
-  let { certificateId, studentName, courseName, issueDate } = req.body;
+  let { certificateId, studentName, courseName, issueDate, description } = req.body;
 
   if (!certificateId) {
     let unique = false;
@@ -78,6 +105,7 @@ const createCertificate = async (req, res) => {
     studentName,
     courseName,
     issueDate,
+    description: description || '',
     photo,
   });
 
@@ -105,7 +133,7 @@ const getCertificate = async (req, res) => {
 };
 
 const updateCertificate = async (req, res) => {
-  const { certificateId, studentName, courseName, issueDate, status } = req.body;
+  const { certificateId, studentName, courseName, issueDate, description, status } = req.body;
 
   const certificate = await Certificate.findById(req.params.id);
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
@@ -130,6 +158,7 @@ const updateCertificate = async (req, res) => {
   certificate.studentName = studentName || certificate.studentName;
   certificate.courseName = courseName || certificate.courseName;
   certificate.issueDate = issueDate || certificate.issueDate;
+  certificate.description = description !== undefined ? description : certificate.description;
   certificate.status = status || certificate.status;
   certificate.photo = photo;
 
@@ -157,11 +186,27 @@ const deleteCertificate = async (req, res) => {
   res.json({ message: 'Certificate deleted' });
 };
 
+const regenerateAllQRCodes = async (req, res) => {
+  const certificates = await Certificate.find();
+  let regenerated = 0;
+  for (const cert of certificates) {
+    if (!cert.qrCode?.url || cert.qrCode.url.includes('/verify')) {
+      if (cert.qrCode?.publicId) await deleteFromCloudinary(cert.qrCode.publicId);
+      cert.qrCode = await generateQRCode(cert);
+      await cert.save();
+      regenerated++;
+    }
+  }
+  res.json({ total: certificates.length, regenerated });
+};
+
 module.exports = {
+  getPublicCertificate,
   verifyCertificate,
   createCertificate,
   getCertificates,
   getCertificate,
   updateCertificate,
   deleteCertificate,
+  regenerateAllQRCodes,
 };
