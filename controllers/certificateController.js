@@ -1,4 +1,5 @@
 const Certificate = require('../models/Certificate');
+const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/helpers');
 
 const verifyCertificate = async (req, res) => {
   const { certificateId } = req.body;
@@ -25,14 +26,14 @@ const verifyCertificate = async (req, res) => {
       studentName: certificate.studentName,
       courseName: certificate.courseName,
       issueDate: certificate.issueDate,
-      grade: certificate.grade,
+      photo: certificate.photo,
       status: certificate.status,
     },
   });
 };
 
 const createCertificate = async (req, res) => {
-  let { certificateId, studentName, courseName, issueDate, grade } = req.body;
+  let { certificateId, studentName, courseName, issueDate } = req.body;
 
   if (!certificateId) {
     let unique = false;
@@ -43,12 +44,17 @@ const createCertificate = async (req, res) => {
     }
   }
 
+  let photo = { url: '', publicId: '' };
+  if (req.file) {
+    photo = await uploadToCloudinary(req.file.buffer, 'certificates');
+  }
+
   const certificate = await Certificate.create({
     certificateId,
     studentName,
     courseName,
     issueDate,
-    grade,
+    photo,
   });
 
   res.status(201).json(certificate);
@@ -72,19 +78,45 @@ const getCertificate = async (req, res) => {
 };
 
 const updateCertificate = async (req, res) => {
-  const { studentName, courseName, issueDate, grade, status } = req.body;
-  const certificate = await Certificate.findByIdAndUpdate(
-    req.params.id,
-    { studentName, courseName, issueDate, grade, status },
-    { new: true, runValidators: true }
-  );
+  const { certificateId, studentName, courseName, issueDate, status } = req.body;
+
+  if (certificateId) {
+    const existing = await Certificate.findOne({ certificateId: certificateId.trim().toUpperCase() });
+    if (existing && existing._id.toString() !== req.params.id) {
+      return res.status(400).json({ message: 'Certificate ID already exists' });
+    }
+  }
+
+  const certificate = await Certificate.findById(req.params.id);
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
-  res.json(certificate);
+
+  let photo = certificate.photo;
+  if (req.file) {
+    if (certificate.photo.publicId) {
+      await deleteFromCloudinary(certificate.photo.publicId);
+    }
+    photo = await uploadToCloudinary(req.file.buffer, 'certificates');
+  }
+
+  certificate.certificateId = certificateId?.trim().toUpperCase() || certificate.certificateId;
+  certificate.studentName = studentName || certificate.studentName;
+  certificate.courseName = courseName || certificate.courseName;
+  certificate.issueDate = issueDate || certificate.issueDate;
+  certificate.status = status || certificate.status;
+  certificate.photo = photo;
+
+  const updated = await certificate.save();
+  res.json(updated);
 };
 
 const deleteCertificate = async (req, res) => {
   const certificate = await Certificate.findById(req.params.id);
   if (!certificate) return res.status(404).json({ message: 'Certificate not found' });
+
+  if (certificate.photo.publicId) {
+    await deleteFromCloudinary(certificate.photo.publicId);
+  }
+
   await certificate.deleteOne();
   res.json({ message: 'Certificate deleted' });
 };
