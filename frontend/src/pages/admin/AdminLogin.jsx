@@ -5,7 +5,8 @@ import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../../contexts/AuthContext';
 import api from '../../services/api';
 import Button from '../../components/ui/Button';
-import { FiMail, FiLock, FiKey, FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiMail, FiLock, FiKey, FiArrowLeft } from 'react-icons/fi';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const AdminLogin = () => {
   const { login, isAuthenticated, admin, loading: authLoading } = useAuth();
@@ -119,27 +120,23 @@ const AdminLogin = () => {
                   </div>
                   <div>
                     <label className="block text-primary font-body font-medium text-sm mb-1.5">Password</label>
-                    <div className="relative">
-                      <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text/30" />
+                    <div className="flex items-center bg-white border-2 border-primary/10 rounded-lg overflow-hidden transition-all duration-300 focus-within:border-accent focus-within:shadow-[0_0_0_3px_rgba(200,155,60,0.1)]">
+                      <FiLock className="ml-3 w-4 h-4 text-text/30 shrink-0" />
                       <input
                         type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
-                        className="w-full pl-10 pr-11 py-3 bg-white border-2 border-primary/10 rounded-lg text-text font-body text-sm outline-none transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_3px_rgba(200,155,60,0.1)] placeholder:text-text/30"
+                        className="flex-1 px-3 py-3 bg-transparent text-text font-body text-sm outline-none placeholder:text-text/30"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md text-gray-500 hover:text-accent transition-colors"
+                        className="px-3 py-3 text-text/40 hover:text-accent transition-colors shrink-0"
                         tabIndex={-1}
                         aria-label={showPassword ? 'Hide password' : 'Show password'}
                       >
-                        {showPassword ? (
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-                        ) : (
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                        )}
+                        {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
                       </button>
                     </div>
                   </div>
