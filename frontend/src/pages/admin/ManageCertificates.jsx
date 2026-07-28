@@ -13,6 +13,7 @@ const emptyForm = {
   courseName: '',
   issueDate: '',
   description: '',
+  headline: '',
 };
 
 const ManageCertificates = () => {
@@ -66,6 +67,7 @@ const ManageCertificates = () => {
         courseName: c.courseName || '',
         issueDate: c.issueDate ? c.issueDate.slice(0, 10) : '',
         description: c.description || '',
+        headline: c.headline || '',
       });
       setPhotoFile(null);
       setPhotoPreview(c.photo?.url || '');
@@ -99,6 +101,7 @@ const ManageCertificates = () => {
       formData.append('courseName', form.courseName);
       formData.append('issueDate', form.issueDate);
       formData.append('description', form.description);
+      formData.append('headline', form.headline);
       if (photoFile) {
         formData.append('photo', photoFile);
       }
@@ -318,6 +321,16 @@ const ManageCertificates = () => {
                     value={form.issueDate}
                     onChange={(e) => setForm({ ...form, issueDate: e.target.value })}
                     className="w-full px-4 py-2.5 bg-cream border border-primary/10 rounded-lg text-text font-body text-sm outline-none focus:border-accent"
+                  />
+                </div>
+                <div>
+                  <label className="block font-body text-sm text-text/60 mb-1.5">Headline (optional)</label>
+                  <input
+                    type="text"
+                    value={form.headline}
+                    onChange={(e) => setForm({ ...form, headline: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-cream border border-primary/10 rounded-lg text-text font-body text-sm outline-none focus:border-accent"
+                    placeholder="e.g. Professional Barista, Coffee Enthusiast"
                   />
                 </div>
                 <div>

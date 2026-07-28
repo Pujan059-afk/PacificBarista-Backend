@@ -34,6 +34,7 @@ import ManageGallery from './pages/admin/ManageGallery';
 import ManageEnrollments from './pages/admin/ManageEnrollments';
 import ManageCertificates from './pages/admin/ManageCertificates';
 import ManageContacts from './pages/admin/ManageContacts';
+import ManageAdmins from './pages/admin/ManageAdmins';
 
 
 const App = () => {
@@ -58,6 +59,7 @@ const App = () => {
                 <Route path="enrollments" element={<ManageEnrollments />} />
                 <Route path="certificates" element={<ManageCertificates />} />
                 <Route path="contacts" element={<ManageContacts />} />
+                <Route path="admins" element={<ManageAdmins />} />
               </Route>
             </Route>
             <Route path="/" element={<MainLayout />}>

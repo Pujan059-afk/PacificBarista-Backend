@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const [superAdmin, setSuperAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +26,8 @@ export const AuthProvider = ({ children }) => {
           const userData = res.data.user || res.data;
           setUser(userData);
           setIsAuthenticated(true);
-          setAdmin(userData.role === 'admin');
+          setAdmin(userData.role === 'admin' || userData.role === 'superadmin');
+          setSuperAdmin(userData.role === 'superadmin');
         })
         .catch(() => {
           localStorage.removeItem('token');
@@ -43,7 +45,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('token', token);
     setUser(userInfo);
     setIsAuthenticated(true);
-    setAdmin(userInfo.role === 'admin');
+    setAdmin(userInfo.role === 'admin' || userInfo.role === 'superadmin');
+    setSuperAdmin(userInfo.role === 'superadmin');
     return userInfo;
   }, []);
 
@@ -52,9 +55,10 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setIsAuthenticated(false);
     setAdmin(false);
+    setSuperAdmin(false);
   }, []);
 
-  const value = { user, isAuthenticated, admin, loading, login, logout };
+  const value = { user, isAuthenticated, admin, superAdmin, loading, login, logout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   FiHome, FiBook, FiUsers, FiImage, FiMessageSquare,
-  FiMail, FiStar, FiLogOut, FiMenu, FiX, FiShield
+  FiMail, FiStar, FiLogOut, FiMenu, FiX, FiShield, FiUserPlus
 } from 'react-icons/fi';
 
 const sidebarLinks = [
@@ -18,10 +18,11 @@ const sidebarLinks = [
   { path: '/admin-pacific/enrollments', label: 'Enrollments', icon: FiUsers },
   { path: '/admin-pacific/certificates', label: 'Certificates', icon: FiShield },
   { path: '/admin-pacific/contacts', label: 'Contacts', icon: FiMail },
+  { path: '/admin-pacific/admins', label: 'Manage Admins', icon: FiUserPlus, superAdminOnly: true },
 ];
 
 const AdminLayout = () => {
-  const { user, isAuthenticated, admin, loading, logout } = useAuth();
+  const { user, isAuthenticated, admin, superAdmin, loading, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -65,10 +66,12 @@ const AdminLayout = () => {
     <div className="flex flex-col h-full">
       <div className="px-6 py-6 border-b border-white/10">
         <h2 className="font-heading text-xl font-bold text-white">Pacific Barista</h2>
-        <p className="font-body text-white/40 text-xs mt-0.5">Admin Panel</p>
+        <p className="font-body text-white/40 text-xs mt-0.5">{superAdmin ? 'Super Admin Panel' : 'Admin Panel'}</p>
       </div>
       <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-        {sidebarLinks.map((link) => (
+        {sidebarLinks
+          .filter((link) => !link.superAdminOnly || superAdmin)
+          .map((link) => (
           <NavLink
             key={link.path}
             to={link.path}
@@ -164,6 +167,11 @@ const AdminLayout = () => {
             <div className="flex items-center gap-4">
               <span className="font-body text-sm text-text/60 hidden sm:block">
                 {user?.name || 'Admin'}
+                {superAdmin && (
+                  <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
+                    Super Admin
+                  </span>
+                )}
               </span>
               <button
                 onClick={handleLogout}

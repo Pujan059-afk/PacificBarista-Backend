@@ -43,7 +43,7 @@ const AdminLogin = () => {
     setVerifying(true);
     try {
       const userData = await login(email, otp);
-      if (userData.role !== 'admin') {
+      if (userData.role !== 'admin' && userData.role !== 'superadmin') {
         setError('You do not have admin access');
         return;
       }

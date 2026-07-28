@@ -110,7 +110,7 @@ const VerifyCertificate = () => {
               </span>
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-cream leading-tight mb-4">
                 Verify a{' '}
-                <span className="text-accent italic">Certificate</span>
+                <span className="text-accent arial">Certificate</span>
               </h1>
               <p className="font-body text-cream/60 text-base md:text-lg leading-relaxed">
                 Enter a certificate ID to instantly confirm its authenticity.
@@ -132,8 +132,8 @@ const VerifyCertificate = () => {
                     <input
                       type="text"
                       value={code}
-                      onChange={(e) => setCode(e.target.value.toUpperCase())}
-                      placeholder="PBC-XXXX-XXXX"
+                      onChange={(e) => setCode(e.target.value.toLowerCase())}
+                      placeholder=""
                       className="w-full pl-10 pr-4 py-3.5 bg-white/10 border border-white/10 rounded-xl text-cream font-body text-sm outline-none focus:border-accent/60 focus:bg-white/15 transition-all placeholder:text-cream/30 uppercase tracking-widest"
                     />
                   </div>
@@ -154,7 +154,7 @@ const VerifyCertificate = () => {
 
               {/* hint text */}
               <p className="text-center font-body text-cream/30 text-xs mt-3 tracking-wide">
-                Certificate IDs follow the format <span className="text-cream/50 font-medium">PBC-XXXX-XXXX</span>
+                Enter the Valid Certificate Code <span className="text-cream/50 font-medium"></span>
               </p>
             </motion.div>
 
