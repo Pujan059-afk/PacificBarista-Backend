@@ -131,7 +131,7 @@ const AdminLogin = () => {
                       <button
                         type="button"
                         onClick={() => setShowPassword((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-text/30 hover:text-text/60 transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-text/50 hover:text-accent transition-colors cursor-pointer"
                         tabIndex={-1}
                       >
                         {showPassword ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
