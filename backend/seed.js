@@ -7,9 +7,7 @@ const seed = async () => {
     await connectDB();
 
     const admins = [
-      { name: 'Samana', email: 'pocomatsamana@gmail.com', password: 'admin@12345', role: 'superadmin' },
-      { name: 'Admin', email: 'pacificbarista@gmail.com', password: 'admin@12345', role: 'admin' },
-      { name: 'Pujan Subedi', email: 'pocomatpujan@gmail.com', password: 'admin@12345', role: 'admin' },
+      { name: 'Pujan Subedi', email: 'pocomatpujan@gmail.com', password: 'admin@12345', role: 'superadmin' },
     ];
 
     for (const adminData of admins) {
@@ -24,9 +22,6 @@ const seed = async () => {
 
     console.log('\nSeed complete!');
     console.log('Super Admin:');
-    console.log('  pocomatsamana@gmail.com / admin@12345');
-    console.log('Admins:');
-    console.log('  pacificbarista@gmail.com / admin@12345');
     console.log('  pocomatpujan@gmail.com / admin@12345');
     process.exit(0);
   } catch (err) {
