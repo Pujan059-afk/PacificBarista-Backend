@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../../contexts/AuthContext';
 import api from '../../services/api';
 import Button from '../../components/ui/Button';
-import { FiMail, FiLock, FiKey, FiArrowLeft } from 'react-icons/fi';
+import { FiMail, FiLock, FiKey, FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi';
 
 const AdminLogin = () => {
   const { login, isAuthenticated, admin, loading: authLoading } = useAuth();
@@ -19,6 +19,7 @@ const AdminLogin = () => {
   const [sending, setSending] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const [sent, setSent] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -121,12 +122,20 @@ const AdminLogin = () => {
                     <div className="relative">
                       <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text/30" />
                       <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
-                        className="w-full pl-10 pr-4 py-3 bg-white border-2 border-primary/10 rounded-lg text-text font-body text-sm outline-none transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_3px_rgba(200,155,60,0.1)] placeholder:text-text/30"
+                        className="w-full pl-10 pr-11 py-3 bg-white border-2 border-primary/10 rounded-lg text-text font-body text-sm outline-none transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_3px_rgba(200,155,60,0.1)] placeholder:text-text/30"
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((v) => !v)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-text/30 hover:text-text/60 transition-colors"
+                        tabIndex={-1}
+                      >
+                        {showPassword ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
+                      </button>
                     </div>
                   </div>
                   <Button type="submit" loading={sending} className="w-full justify-center" size="lg">
