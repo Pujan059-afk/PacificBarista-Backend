@@ -95,20 +95,22 @@ const TestimonialsSlider = () => {
                 >
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent/40 via-accent to-accent/40 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <div className="flex items-center gap-4 mb-5">
+                    <div className="flex items-center gap-4 mb-5">
                     <div className="relative">
-                      <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${t.gradient} blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
                       {t.photo?.url ? (
                         <img
                           src={t.photo.url}
                           alt={t.studentName}
-                          className="relative w-14 h-14 rounded-full object-cover ring-2 ring-white shadow-md flex-shrink-0"
+                          className="w-14 h-14 rounded-full object-cover ring-2 ring-white shadow-md flex-shrink-0"
                         />
                       ) : (
-                        <div
-                          className={`relative w-14 h-14 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-heading font-semibold text-lg flex-shrink-0 shadow-md`}
-                        >
-                          {initials(t.studentName)}
+                        <div className="relative">
+                          <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${t.gradient} blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
+                          <div
+                            className={`relative w-14 h-14 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-heading font-semibold text-lg flex-shrink-0 shadow-md`}
+                          >
+                            {initials(t.studentName)}
+                          </div>
                         </div>
                       )}
                     </div>
