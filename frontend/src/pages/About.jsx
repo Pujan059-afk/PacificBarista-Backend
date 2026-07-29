@@ -11,7 +11,7 @@ import pacificStudentTraining from '../assets/images/PacificStudentTraining.jpg'
 
 
 const milestones = [
-  { year: '2015', title: 'Founded in Portland', description: 'Pacific Barista Academy opened its doors with a single espresso machine and a dream.' },
+  { year: '2015', title: 'Founded in Pokhara', description: 'Pacific Barista Academy opened its doors with a single espresso machine and a dream.' },
   { year: '2017', title: 'First Certification Program', description: 'Launched our industry-recognized barista certification, setting new standards.' },
   { year: '2019', title: 'Expanded Campus', description: 'Moved to a state-of-the-art facility with dedicated labs for brewing and latte art.' },
   { year: '2021', title: 'Online Learning Launch', description: 'Adapted our curriculum for hybrid learning, reaching students worldwide.' },
@@ -94,7 +94,7 @@ const About = () => {
               Our Story
             </h1>
             <p className="font-body text-cream/60 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              From a single espresso machine in Portland to one of the most respected barista training academies — our journey is brewed in passion.
+              From a single espresso machine in Pokhara to one of the most respected barista training academies — our journey is brewed in passion.
             </p>
           </motion.div>
         </div>
@@ -117,13 +117,13 @@ const About = () => {
               </h2>
               <div className="space-y-4 font-body text-text/70 leading-relaxed">
                 <p>
-                  Pacific Barista Academy was founded in 2015 by a group of coffee professionals who shared a common vision: to create a training environment that bridged the gap between passion and profession. What started as small workshops in a rented Portland space quickly grew into something much larger.
+                  Pacific Barista Academy was founded in 2015 by a group of coffee professionals who shared a common vision: to create a training environment that bridged the gap between passion and profession. What started as small workshops in a rented Pokhara space quickly grew into something much larger.
                 </p>
                 <p>
                   Over the years, we have trained over a thousand baristas, many of whom now work at award-winning cafes, roasteries, and coffee brands around the world. Our curriculum is continuously refined to reflect the latest industry standards and innovations.
                 </p>
                 <p>
-                  Today, we are proud to be recognized as one of the premier barista training academies in the Pacific Northwest and beyond, with a state-of-the-art facility and a team of instructors who are leaders in their craft.
+                  Today, we are proud to be recognized as one of the premier barista training academies in the Nepal and beyond, with a state-of-the-art facility and a team of instructors who are leaders in their craft.
                 </p>
               </div>
             </motion.div>
