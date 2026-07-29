@@ -174,9 +174,9 @@ const Blog = () => {
                         </span>
                         <Link
                           to={`/blog/${post.slug}`}
-                          className="flex items-center gap-1 text-accent font-body text-sm font-medium hover:gap-2 transition-all duration-300"
+                          className="text-accent font-body text-xs font-medium hover:text-accent/70 transition-colors"
                         >
-                          Read More <FiArrowRight className="w-4 h-4" />
+                          Read More →
                         </Link>
                       </div>
                     </div>
