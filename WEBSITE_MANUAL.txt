@@ -1,0 +1,210 @@
+================================================================================
+                    PACIFIC BARISTA TRAINING ACADEMY
+                      WEBSITE MANUAL & GUIDE
+================================================================================
+
+Website URL: https://pacificbarista.com.np
+
+
+----------------------------
+  PUBLIC PAGES (VISITORS)
+----------------------------
+
+1. Homepage
+   URL: https://pacificbarista.com.np/
+   Description: Landing page with hero section, featured courses, testimonials,
+   and call-to-action buttons.
+
+2. About Us
+   URL: https://pacificbarista.com.np/about
+   Description: Information about Pacific Barista Training Academy, its mission,
+   vision, and story.
+
+3. Courses
+   URL: https://pacificbarista.com.np/courses
+   Description: List of all available barista training courses.
+
+4. Course Detail
+   URL: https://pacificbarista.com.np/courses/:slug
+   Description: Individual course page with full details, syllabus, and enrollment
+   option. (e.g., /courses/barista-basics)
+
+5. Certifications
+   URL: https://pacificbarista.com.np/certifications
+   Description: Information about certifications offered by the academy.
+
+6. Trainers
+   URL: https://pacificbarista.com.np/trainers
+   Description: Meet the trainers and instructors.
+
+7. Gallery
+   URL: https://pacificbarista.com.np/gallery
+   Description: Photo gallery of the academy, students, and events.
+
+8. Blog
+   URL: https://pacificbarista.com.np/blog
+   Description: Latest blog posts and articles about coffee and barista tips.
+
+9. Blog Post
+   URL: https://pacificbarista.com.np/blog/:slug
+   Description: Individual blog post page. (e.g., /blog/latte-art-tips)
+
+10. Testimonials
+    URL: https://pacificbarista.com.np/testimonials
+    Description: Student reviews and testimonials.
+
+11. Contact
+    URL: https://pacificbarista.com.np/contact
+    Description: Contact form, map, phone number, and email to reach the academy.
+
+12. FAQ
+    URL: https://pacificbarista.com.np/faq
+    Description: Frequently asked questions about courses, enrollment, and fees.
+
+13. Enroll
+    URL: https://pacificbarista.com.np/enroll
+    Description: Student enrollment/registration form for courses.
+
+14. Verify Certificate
+    URL: https://pacificbarista.com.np/verify
+    Description: Public page to verify a certificate by entering the certificate
+    code. Scanning the QR code on a certificate also leads here.
+
+15. Certificate Details
+    URL: https://pacificbarista.com.np/certificate/:code
+    Description: Public page showing full details of a verified certificate.
+    (e.g., /certificate/PB-2026-001)
+
+16. Privacy Policy
+    URL: https://pacificbarista.com.np/privacy
+    Description: Privacy policy of the website.
+
+17. Terms of Service
+    URL: https://pacificbarista.com.np/terms
+    Description: Terms and conditions of using the website and services.
+
+
+----------------------------
+  ADMIN DASHBOARD
+----------------------------
+
+Admin Login URL: https://pacificbarista.com.np/admin-pacific
+
+LOGIN PROCESS:
+  Step 1: Enter your email and password, then click "Send OTP"
+  Step 2: Check your email inbox for a 6-digit OTP code
+  Step 3: Enter the OTP and click "Verify & Sign In"
+  Note: Once logged in, you stay logged in for 7 days. After that, you
+  need to log in again with email, password, and a new OTP.
+
+ADMIN CREDENTIALS (Super Admin):
+  Email:   Enter your email
+  Password: Enter your password
+
+  Note: Only the super admin can add, edit, or delete other admins.
+  You can add more admins from the Manage Admins section after logging in.
+
+
+ADMIN DASHBOARD PAGES:
+
+1. Dashboard (Overview)
+   URL: https://pacificbarista.com.np/admin-pacific/dashboard
+   Description: Overview with statistics, recent activity, and quick links.
+
+2. Manage Courses
+   URL: https://pacificbarista.com.np/admin-pacific/courses
+   Description: View all courses. Add new courses or edit existing ones.
+   - Add Course: /admin-pacific/courses/new
+   - Edit Course: /admin-pacific/courses/edit/:id
+
+3. Manage Blog Posts
+   URL: https://pacificbarista.com.np/admin-pacific/blogs
+   Description: View all blog posts. Add new posts or edit existing ones.
+   - Add Blog: /admin-pacific/blogs/new
+   - Edit Blog: /admin-pacific/blogs/edit/:id
+
+4. Manage Trainers
+   URL: https://pacificbarista.com.np/admin-pacific/trainers
+   Description: Add, edit, or remove trainers/instructors.
+
+5. Manage Testimonials
+   URL: https://pacificbarista.com.np/admin-pacific/testimonials
+   Description: Add, edit, or remove student testimonials/reviews.
+
+6. Manage Gallery
+   URL: https://pacificbarista.com.np/admin-pacific/gallery
+   Description: Upload, organize, or remove gallery photos.
+
+7. Manage Enrollments
+   URL: https://pacificbarista.com.np/admin-pacific/enrollments
+   Description: View and manage student enrollment submissions.
+
+8. Manage Certificates
+   URL: https://pacificbarista.com.np/admin-pacific/certificates
+   Description: Issue, view, and manage student certificates.
+   Each certificate gets a unique code and QR code.
+
+9. Manage Contacts
+   URL: https://pacificbarista.com.np/admin-pacific/contacts
+   Description: View messages and inquiries submitted via the contact form.
+
+10. Manage Admins (Super Admin Only)
+    URL: https://pacificbarista.com.np/admin-pacific/admins
+    Description: Add, edit, or remove admin accounts. Change admin roles.
+    Only super admins can access this section.
+
+
+----------------------------
+  QUICK START GUIDE
+----------------------------
+
+FOR VISITORS:
+  1. Go to https://pacificbarista.com.np/
+  2. Browse courses at /courses
+  3. Enroll in a course at /enroll
+  4. Verify a certificate at /verify
+  5. Read blog posts at /blog
+  6. Contact the academy at /contact
+
+FOR ADMIN (SUPER ADMIN):
+  1. Go to https://pacificbarista.com.np/admin-pacific
+  2. Enter email: 
+  3. Enter password: 
+  4. Click "Send OTP"
+  5. Check your email for the 6-digit OTP code
+  6. Enter the OTP and click "Verify & Sign In"
+  7. You are now on the Dashboard
+  8. Use the sidebar to navigate to different sections
+  9. Your session lasts 7 days before you need to re-login
+
+TO ADD A NEW ADMIN:
+  1. Log in as Super Admin
+  2. Go to Manage Admins (/admin-pacific/admins)
+  3. Click "Add Admin"
+  4. Enter their name, email, password, and role
+  5. Click "Create Admin"
+  6. The new admin can now log in with their email and password
+
+TO EDIT AN ADMIN:
+  1. Log in as Super Admin
+  2. Go to Manage Admins (/admin-pacific/admins)
+  3. Click the pencil/edit icon next to the admin
+  4. Update their name, email, password (optional), or role
+  5. Click "Update Admin"
+
+
+----------------------------
+  TECHNICAL INFO
+----------------------------
+
+Frontend:  React + Vite + Tailwind CSS v4
+Backend:   Node.js + Express + MongoDB (Mongoose)
+Database:  MongoDB Atlas (cloud)
+Hosting:   Frontend on Vercel, Backend on Render
+Email:     Resend API for OTP delivery
+Storage:   Cloudinary for image uploads
+Domain:    pacificbarista.com.np
+
+================================================================================
+                      END OF MANUAL
+================================================================================

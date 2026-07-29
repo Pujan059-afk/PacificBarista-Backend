@@ -21,8 +21,8 @@ const CourseCard = ({ course }) => {
     <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col">
       <Link to={`/courses/${slug}`} className="block">
         {image?.url ? (
-          <div className="relative h-36 overflow-hidden">
-            <img src={image.url} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <div className="relative h-36 overflow-hidden bg-gray-50">
+            <img src={image.url} alt={title} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
         ) : (
