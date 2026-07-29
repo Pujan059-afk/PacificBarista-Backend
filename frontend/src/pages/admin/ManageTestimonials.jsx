@@ -84,11 +84,12 @@ const ManageTestimonials = () => {
       formData.append('isActive', form.isActive);
       if (photo) formData.append('photo', photo);
 
+      const headers = { 'Content-Type': 'multipart/form-data' };
       if (editId) {
-        await api.put(`/testimonials/${editId}`, formData);
+        await api.put(`/testimonials/${editId}`, formData, { headers });
         showToast('Testimonial updated', 'success');
       } else {
-        await api.post('/testimonials', formData);
+        await api.post('/testimonials', formData, { headers });
         showToast('Testimonial created', 'success');
       }
       setModalOpen(false);
