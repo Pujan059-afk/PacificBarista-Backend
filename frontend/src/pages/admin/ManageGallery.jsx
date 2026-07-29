@@ -170,7 +170,8 @@ const ManageGallery = () => {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        className={`mb-6 border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
+        onClick={() => fileInputRef.current?.click()}
+        className={`mb-6 border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
           dragOver
             ? 'border-accent bg-accent/5 scale-[1.01]'
             : 'border-primary/10 bg-white hover:border-accent/30 hover:bg-accent/5'
