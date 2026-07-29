@@ -77,12 +77,12 @@ const GalleryPreview = () => {
                 <motion.div
                   key={img._id || i}
                   variants={fadeIn('up')}
-                  className="group relative rounded-xl overflow-hidden cursor-pointer bg-gray-50"
+                  className="group relative rounded-xl overflow-hidden cursor-pointer"
                 >
                   <img
                     src={img.image.url}
                     alt={img.category || 'Gallery image'}
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/40 to-transparent">
                   <span className="text-white/90 text-xs font-body uppercase tracking-wider">{img.category}</span>

@@ -128,11 +128,11 @@ const Gallery = () => {
                   className="break-inside-avoid cursor-pointer group relative rounded-2xl overflow-hidden shadow-md"
                 >
                    {img.image?.url ? (
-                     <div className="relative w-full h-64 bg-gray-50">
+                     <div className="relative w-full h-64">
                        <img
                          src={img.image.url}
                          alt={img.category || 'Gallery image'}
-                         className="w-full h-full object-contain"
+                         className="w-full h-full object-cover"
                        />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-4 group-hover:translate-y-0">
