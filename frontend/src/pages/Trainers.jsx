@@ -27,19 +27,17 @@ const TrainerCard = ({ trainer, gradient }) => {
       whileHover={{ y: -8, transition: { duration: 0.3 } }}
       className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 group"
     >
-      {trainer.photo?.url ? (
-        <div className="h-36 overflow-hidden relative">
-          <img src={trainer.photo.url} alt={trainer.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
-        </div>
-      ) : (
-        <div className={`h-36 bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden`}>
-          <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-            <span className="text-2xl font-heading font-bold text-white">{trainer.name.split(' ').map(n => n[0]).join('')}</span>
+      <div className="pt-8 pb-4 flex justify-center">
+        {trainer.photo?.url ? (
+          <div className="w-28 h-28 rounded-full overflow-hidden ring-4 ring-white shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-500">
+            <img src={trainer.photo.url} alt={trainer.name} className="w-full h-full object-cover" />
           </div>
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
-        </div>
-      )}
+        ) : (
+          <div className={`w-28 h-28 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-500`}>
+            <span className="text-3xl font-heading font-bold text-white">{trainer.name.split(' ').map(n => n[0]).join('')}</span>
+          </div>
+        )}
+      </div>
       <div className="px-4 pt-3 pb-3">
         <div className="flex items-center justify-between mb-1">
           <h3 className="font-heading text-base font-bold text-primary">{trainer.name}</h3>

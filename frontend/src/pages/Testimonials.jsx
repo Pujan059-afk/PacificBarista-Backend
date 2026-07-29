@@ -38,9 +38,15 @@ const TestimonialCard = ({ t, featured }) => (
   >
     <div className={`p-6 ${featured ? 'md:w-full' : ''}`}>
       <div className="flex items-center gap-4 mb-4">
-        <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center flex-shrink-0`}>
-          <span className="text-lg font-heading font-bold text-white">{t.studentName.split(' ').map(n => n[0]).join('')}</span>
-        </div>
+        {t.photo?.url ? (
+          <div className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-white shadow-md flex-shrink-0">
+            <img src={t.photo.url} alt={t.studentName} className="w-full h-full object-cover" />
+          </div>
+        ) : (
+          <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center flex-shrink-0`}>
+            <span className="text-lg font-heading font-bold text-white">{t.studentName.split(' ').map(n => n[0]).join('')}</span>
+          </div>
+        )}
         <div>
           <h3 className="font-heading font-bold text-primary">{t.studentName}</h3>
           <Badge variant="accent">{t.course}</Badge>
