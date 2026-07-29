@@ -30,7 +30,7 @@ const TestimonialsSlider = () => {
     const fetchTestimonials = async () => {
       try {
         const res = await api.get('/testimonials');
-        const data = res.data?.testimonials || res.data || [];
+        const data = Array.isArray(res.data?.testimonials) ? res.data.testimonials : Array.isArray(res.data) ? res.data : [];
         setTestimonials(data.map((t, i) => ({ ...t, gradient: gradients[i % gradients.length] })));
       } catch (err) {
         console.error('Failed to load testimonials', err);

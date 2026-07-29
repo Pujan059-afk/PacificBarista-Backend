@@ -36,7 +36,7 @@ const ManageTestimonials = () => {
   const fetchTestimonials = async () => {
     try {
       const res = await api.get('/testimonials?limit=100');
-      setTestimonials(res.data?.testimonials || res.data || []);
+      setTestimonials(Array.isArray(res.data?.testimonials) ? res.data.testimonials : Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       showToast('Failed to load testimonials', 'error');
     } finally {

@@ -61,7 +61,7 @@ const Testimonials = () => {
     const fetchTestimonials = async () => {
       try {
         const res = await api.get('/testimonials');
-        const data = res.data?.testimonials || res.data || [];
+        const data = Array.isArray(res.data?.testimonials) ? res.data.testimonials : Array.isArray(res.data) ? res.data : [];
         const mapped = data.map((t, i) => ({
           ...t,
           gradient: gradients[i % gradients.length],
