@@ -143,12 +143,12 @@ const Blog = () => {
                     >
                       <Link to={`/blog/${post.slug}`} className="block">
                         {post.image?.url ? (
-                           <div className="relative h-36 overflow-hidden bg-gray-50">
-                             <img src={post.image.url} alt={post.title} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
+                           <div className="relative h-44 overflow-hidden bg-gray-50">
+                             <img src={post.image.url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                           </div>
                         ) : (
-                          <div className={`relative h-36 bg-gradient-to-br ${gradients[i % gradients.length]} flex items-center justify-center overflow-hidden`}>
+                           <div className={`relative h-44 bg-gradient-to-br ${gradients[i % gradients.length]} flex items-center justify-center overflow-hidden`}>
                             <span className="text-lg font-heading font-bold text-white/30 uppercase tracking-widest">{post.category}</span>
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                           </div>

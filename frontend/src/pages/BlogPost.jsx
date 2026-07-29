@@ -110,7 +110,7 @@ const BlogPost = () => {
           <div className="max-w-4xl mx-auto">
             {post.image?.url && (
               <motion.div variants={fadeIn('up')} initial="hidden" animate="show" className="w-full rounded-2xl overflow-hidden mb-10 shadow-lg">
-                 <img src={post.image.url} alt={post.title} className="w-full max-h-[500px] object-contain" />
+                 <img src={post.image.url} alt={post.title} className="w-full max-h-[500px] object-cover" />
               </motion.div>
             )}
 
@@ -154,11 +154,11 @@ const BlogPost = () => {
                     <motion.div key={rp._id || i} variants={fadeIn('up', i * 0.1)} initial="hidden" whileInView="show" viewport={{ once: true }}>
                       <Link to={`/blog/${rp.slug}`} className="group block">
                         {rp.image?.url ? (
-                           <div className="h-32 rounded-xl overflow-hidden mb-3 bg-gray-50">
-                             <img src={rp.image.url} alt={rp.title} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
+                           <div className="h-40 rounded-xl overflow-hidden mb-3 bg-gray-50">
+                             <img src={rp.image.url} alt={rp.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                           </div>
                         ) : (
-                          <div className={`h-32 bg-gradient-to-br ${rg} rounded-xl flex items-center justify-center mb-3`}>
+                           <div className={`h-40 bg-gradient-to-br ${rg} rounded-xl flex items-center justify-center mb-3`}>
                             <span className="font-heading text-lg font-bold text-white/20 uppercase tracking-widest">Article</span>
                           </div>
                         )}

@@ -21,12 +21,12 @@ const CourseCard = ({ course }) => {
     <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col">
       <Link to={`/courses/${slug}`} className="block">
         {image?.url ? (
-          <div className="relative h-36 overflow-hidden bg-gray-50">
-            <img src={image.url} alt={title} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
+          <div className="relative h-44 overflow-hidden bg-gray-50">
+            <img src={image.url} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
         ) : (
-          <div className={`relative h-36 bg-gradient-to-br ${levelColors[level?.toLowerCase()] || 'from-primary to-secondary'} flex items-center justify-center overflow-hidden`}>
+          <div className={`relative h-44 bg-gradient-to-br ${levelColors[level?.toLowerCase()] || 'from-primary to-secondary'} flex items-center justify-center overflow-hidden`}>
             <IconCoffee className="w-10 h-10 text-white/80" />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
