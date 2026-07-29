@@ -170,12 +170,12 @@ const ManageTrainers = () => {
                   className="border-b border-primary/5 last:border-0 hover:bg-cream/50 transition-colors"
                 >
                   <td className="py-3 pr-4 p-4">
-                    <div className="w-10 h-10 rounded-full overflow-hidden bg-primary/5">
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-primary/5 ring-2 ring-white shadow-sm">
                       {trainer.photo?.url ? (
                         <img src={trainer.photo.url} alt="" className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-text/20">
-                          <FiUsers className="w-4 h-4" />
+                          <FiUsers className="w-5 h-5" />
                         </div>
                       )}
                     </div>
@@ -306,11 +306,11 @@ const ManageTrainers = () => {
                 <div>
                   <label className="block text-primary font-body font-medium text-sm mb-1.5">Photo</label>
                   <div className="flex items-center gap-3">
-                    <div className="w-14 h-14 rounded-full border-2 border-dashed border-primary/10 overflow-hidden flex items-center justify-center bg-cream shrink-0">
+                    <div className="w-24 h-24 rounded-full border-2 border-dashed border-primary/10 overflow-hidden flex items-center justify-center bg-cream shrink-0">
                       {imagePreview ? (
                         <img src={imagePreview} alt="" className="w-full h-full object-cover" />
                       ) : (
-                        <FiUpload className="w-5 h-5 text-text/20" />
+                        <FiUpload className="w-6 h-6 text-text/20" />
                       )}
                     </div>
                     <label className="px-4 py-2 bg-cream border border-primary/10 rounded-lg cursor-pointer hover:border-accent/30 transition-colors font-body text-sm text-text">
