@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiSearch, FiCalendar, FiUser, FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import Badge from '../components/ui/Badge';
+import { FiSearch, FiCalendar, FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import PageTransition from '../components/common/PageTransition';
 import Loader from '../components/common/Loader';
 import api from '../services/api';
@@ -130,58 +129,55 @@ const Blog = () => {
                 variants={staggerContainer(0.1)}
                 initial="hidden"
                 animate="show"
-                className="grid md:grid-cols-2 gap-4"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
               >
-                {posts.map((post, i) => (
-                  <motion.div
-                    key={post._id || i}
-                    variants={fadeIn('up', i * 0.1)}
-                    className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 group"
-                  >
-                    <Link to={`/blog/${post.slug}`}>
-                      {post.image?.url ? (
-                        <div className="h-40 overflow-hidden relative">
-                          <img src={post.image.url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
-                        </div>
-                      ) : (
-                        <div className={`h-40 bg-gradient-to-br ${gradients[i % gradients.length]} flex items-center justify-center relative`}>
-                          <span className="text-lg font-heading font-bold text-white/30 uppercase tracking-widest">{post.category}</span>
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
-                        </div>
-                      )}
-                    </Link>
-                    <div className="px-4 pt-3 pb-3">
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <Badge variant="accent" className="text-xs">{post.category}</Badge>
-                        <span className="flex items-center gap-1 text-xs text-text/50 font-body">
-                          <FiCalendar className="w-3 h-3" />
-                          {post.publishedAt
-                            ? new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-                            : new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                        </span>
-                      </div>
-                      <Link to={`/blog/${post.slug}`}>
-                        <h3 className="font-heading text-base font-bold text-primary mb-1 group-hover:text-accent transition-colors duration-300">
-                          {post.title}
-                        </h3>
+                {posts.map((post, i) => {
+                  const date = post.publishedAt
+                    ? new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                    : new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                  return (
+                    <motion.div
+                      key={post._id || i}
+                      variants={fadeIn('up', i * 0.1)}
+                      className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    >
+                      <Link to={`/blog/${post.slug}`} className="block">
+                        {post.image?.url ? (
+                          <div className="relative h-36 overflow-hidden">
+                            <img src={post.image.url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                          </div>
+                        ) : (
+                          <div className={`relative h-36 bg-gradient-to-br ${gradients[i % gradients.length]} flex items-center justify-center overflow-hidden`}>
+                            <span className="text-lg font-heading font-bold text-white/30 uppercase tracking-widest">{post.category}</span>
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                          </div>
+                        )}
                       </Link>
-                      <p className="font-body text-text/70 text-sm leading-relaxed mb-2">{post.excerpt}</p>
-                      <div className="flex items-center justify-between pt-2 border-t border-primary/5">
-                        <span className="flex items-center gap-1 text-xs text-text/50 font-body">
-                          <FiUser className="w-3 h-3" />
-                          {post.author}
-                        </span>
+                      <div className="px-4 pt-3 pb-3">
+                        <div className="flex items-center gap-2 text-text/40 text-xs font-body mb-1.5">
+                          <FiCalendar className="w-3 h-3" />
+                          <span>{date}</span>
+                        </div>
+                        <Link to={`/blog/${post.slug}`}>
+                          <h3 className="font-heading text-base font-semibold text-primary mb-1 group-hover:text-accent transition-colors duration-300 leading-snug">
+                            {post.title}
+                          </h3>
+                        </Link>
+                        <p className="font-body text-text/60 text-sm leading-relaxed mb-2 line-clamp-2">
+                          {post.excerpt}
+                        </p>
                         <Link
                           to={`/blog/${post.slug}`}
-                          className="text-accent font-body text-xs font-medium hover:text-accent/70 transition-colors"
+                          className="inline-flex items-center gap-1 text-accent font-body text-sm font-semibold hover:gap-2 transition-all duration-300"
                         >
-                          Read More →
+                          Read More
+                          <FiArrowRight className="w-3.5 h-3.5" />
                         </Link>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  );
+                })}
               </motion.div>
 
               {pages > 1 && (
