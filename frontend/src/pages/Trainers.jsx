@@ -29,12 +29,12 @@ const TrainerCard = ({ trainer, gradient }) => {
     >
       <div className="pt-8 pb-4 flex justify-center">
         {trainer.photo?.url ? (
-          <div className="w-28 h-28 rounded-full overflow-hidden ring-4 ring-white shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-500">
+          <div className="w-36 h-36 rounded-full overflow-hidden ring-4 ring-white shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-500">
             <img src={trainer.photo.url} alt={trainer.name} className="w-full h-full object-cover" />
           </div>
         ) : (
-          <div className={`w-28 h-28 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-500`}>
-            <span className="text-3xl font-heading font-bold text-white">{trainer.name.split(' ').map(n => n[0]).join('')}</span>
+          <div className={`w-36 h-36 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-500`}>
+            <span className="text-4xl font-heading font-bold text-white">{trainer.name.split(' ').map(n => n[0]).join('')}</span>
           </div>
         )}
       </div>
