@@ -40,12 +40,19 @@ const ManageEnrollments = () => {
   const handleStatusChange = async (id, status) => {
     setProcessing(id);
     try {
-      await api.put(`/enrollments/${id}`, { status });
-      setEnrollments((prev) =>
-        prev.map((e) => (e._id === id ? { ...e, status } : e))
-      );
-      showToast(`Enrollment ${status} successfully`, 'success');
-      if (viewItem?._id === id) setViewItem((prev) => prev ? { ...prev, status } : prev);
+      if (status === 'Rejected') {
+        await api.delete(`/enrollments/${id}`);
+        setEnrollments((prev) => prev.filter((e) => e._id !== id));
+        showToast('Enrollment rejected and removed', 'success');
+        if (viewItem?._id === id) setViewItem(null);
+      } else {
+        await api.put(`/enrollments/${id}`, { status });
+        setEnrollments((prev) =>
+          prev.map((e) => (e._id === id ? { ...e, status } : e))
+        );
+        showToast(`Enrollment ${status} successfully`, 'success');
+        if (viewItem?._id === id) setViewItem((prev) => prev ? { ...prev, status } : prev);
+      }
     } catch (err) {
       showToast(err.message || 'Failed to update status', 'error');
     } finally {
