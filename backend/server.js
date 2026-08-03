@@ -3,6 +3,7 @@ require('express-async-errors');
 
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const connectDB = require('./config/db');
@@ -26,6 +27,10 @@ const app = express();
 
 connectDB();
 configureCloudinary();
+
+// Security headers
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' })); // allow static uploads to load cross-origin
 
 const allowedOrigins = [
   'http://localhost:5173',

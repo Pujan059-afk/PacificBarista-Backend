@@ -37,7 +37,6 @@ const login = async (req, res) => {
       email: admin.email,
       role: admin.role,
     },
-    token,
   });
 };
 
@@ -72,8 +71,7 @@ const sendOtp = async (req, res) => {
     res.json({ message: 'OTP sent to your email' });
   } catch (err) {
     console.error('Email send failed:', err.message);
-    console.log(`OTP for ${email}: ${otp}`);
-    res.json({ message: 'OTP sent to your email' });
+    res.status(500).json({ message: 'Failed to send OTP email. Please try again.' });
   }
 };
 
@@ -125,7 +123,6 @@ const verifyOtp = async (req, res) => {
       email: admin.email,
       role: admin.role,
     },
-    token,
   });
 };
 
