@@ -122,6 +122,7 @@ const ManageAdmins = () => {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        autoComplete="new-password"
         className="flex-1 px-4 py-2.5 bg-transparent text-text font-body text-sm outline-none placeholder:text-text/30"
         minLength={6}
       />

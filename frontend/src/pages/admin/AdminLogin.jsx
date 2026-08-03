@@ -127,6 +127,7 @@ const AdminLogin = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
+                        autoComplete="current-password"
                         className="flex-1 px-3 py-3 bg-transparent text-text font-body text-sm outline-none placeholder:text-text/30"
                       />
                       <span
